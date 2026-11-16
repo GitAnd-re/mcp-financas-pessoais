@@ -1,0 +1,17 @@
+# Imagem base com Java 25
+FROM eclipse-temurin:25-jdk
+
+# Diretório de trabalho
+WORKDIR /opt/mcp
+
+# Cria a estrutura do pacote
+RUN mkdir -p encoding_test
+
+# Copia a classe de teste
+COPY src/main/java/encoding_test/FileNameEncodingTest.java ./encoding_test
+
+# Compila a classe
+RUN javac encoding_test/FileNameEncodingTest.java
+
+# Executa o teste
+ENTRYPOINT ["java","encoding_test.FileNameEncodingTest"]

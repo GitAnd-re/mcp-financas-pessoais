@@ -1,0 +1,14 @@
+
+services:
+   encoding-test:
+      build:
+         context: .
+         dockerfile: Dockerfile.encoding-test
+
+      container_name: mcp-encoding-test
+
+      volumes:
+         - type: bind
+           source: "D:\\desenvolvimento"
+           target: /opt/mcp/files
+           read_only: true
