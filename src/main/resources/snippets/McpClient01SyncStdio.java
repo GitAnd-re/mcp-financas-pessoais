@@ -1,4 +1,4 @@
-package br.edu.ifpr.mcp_server.main;
+package br.edu.ifpr.mcp_financas_pessoais.main;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -30,7 +30,7 @@ public class McpClient01SyncStdio {
                             LoggerFactory.getLogger(McpClient01SyncStdio.class);
    // nome e caminho para o servidor MCP
    private static final String SERVER_PATH =
-                                         "../../server/mcp_server01_server.jar";
+                                         "../../server/mcp_financas_pessoais_server.jar";
    // objeto cliente para comunicação com o servidor
    private final McpSyncClient client;
 

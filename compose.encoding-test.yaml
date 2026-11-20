@@ -9,6 +9,6 @@ services:
 
       volumes:
          - type: bind
-           source: "D:\\desenvolvimento"
+           source: "C:\\Arquivos Teste"
            target: /opt/mcp/files
            read_only: true

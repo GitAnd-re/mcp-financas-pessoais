@@ -1,6 +1,6 @@
 
-set MCP_FILES_ROOT=D:\desenvolvimento
+set MCP_FILES_ROOT="C:\Arquivos Teste"
 cd target\dist-client
-java -jar mcp_server01_client.jar
+java -jar mcp_financas_pessoais_client.jar
 cd ..\..
 set MCP_FILES_ROOT=

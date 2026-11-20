@@ -1,4 +1,4 @@
-package br.edu.ifpr.mcp_server.main;
+package br.edu.ifpr.mcp_financas_pessoais.main;
 
 import java.io.File;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class McpClient01Http {
                                  LoggerFactory.getLogger(McpClient01Http.class);
 
    private static final String SERVER_PATH =
-                                         "../../server/mcp_server01_server.jar";
+                                         "../../server/mcp_financas_pessoais_server.jar";
 
    private void loggingMessageNotification(
                                       LoggingMessageNotification notification) {

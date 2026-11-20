@@ -69,7 +69,7 @@ Argumentos:
 ---
 
 ### 📌 Executar a aplicação 📌
-Este é um projeto único para duas aplicações: servidor e cliente. O servidor é executado a partir da classe `br.edu.ifpr.mcp_server.main.McpServer01SyncStdio`. Já o cliente é executado a partir da classe `br.edu.ifpr.mcp_server.main.McpClient01SyncStdio`.
+Este é um projeto único para duas aplicações: servidor e cliente. O servidor é executado a partir da classe `br.edu.ifpr.mcp_financas_pessoais.main.McpServer01SyncStdio`. Já o cliente é executado a partir da classe `br.edu.ifpr.mcp_financas_pessoais.main.McpClient01SyncStdio`.
 
 Inicialmente, é preciso gerar a aplicação servidor e, em seguida, executar o cliente, tanto no [Eclispe IDE](https://www.eclipse.org/) quanto em linha de comando (CLI - *Command Line Interface*).
 
@@ -111,7 +111,7 @@ mvn clean package -Pclient -DskipTests
 # repassará ao servidora
 a
 
-java -jar mcp_server_01_client.jar DIRETÓRIO_AUTORIZADO
+java -jar mcp_financas_pessoais_01_client.jar DIRETÓRIO_AUTORIZADO
 ```
 
 ou
@@ -121,7 +121,7 @@ ou
 # DIRETÓRIO_AUTORIZADO é disponibilizado por meio da variável
 # de ambiente MCP_FILES_ROOT e será repassado ao servidora
 set MCP_FILES_ROOT=DIRETÓRIO_AUTORIZADO
-java -jar mcp_server_01_client.jar
+java -jar mcp_financas_pessoais_01_client.jar
 set MCP_FILES_ROOT=
 ```
 
@@ -131,7 +131,7 @@ ou
 # executar o cliente MCP Java, que executará o servidor MCP Javaa
 # DIRETÓRIO_AUTORIZADO é disponibilizado por meio de um parâmetro
 # à JVM (propriedade) e será repassado ao servidor
-java -Dmcp.files.root=DIRETÓRIO_AUTORIZADO  -jar mcp_server_01_client.jar
+java -Dmcp.files.root=DIRETÓRIO_AUTORIZADO  -jar mcp_financas_pessoais_01_client.jar
 ```
 
 Independentemente do modo de execução do processo de construção (*build*), se realizado no Eclipse IDE ou em CLI, uma vez que ambas as aplicações tenham sido criadas, o programador deve abrir uma janela do terminal e mudar para o diretório **dist-client**. Estando neste diretório usar uma das opçãos acima, pressionar a tecla ENTER <img width="20" height="20" src="https://img.icons8.com/color/48/enter-key.png" alt="enter-key"/> e aguardar a execução do cliente que, por sua vez, executará o servidor e apresentará ao usuário um menu para interagir com a(s) ferramenta(s) disponibilizadas pelo servidor.

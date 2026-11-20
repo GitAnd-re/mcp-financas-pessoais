@@ -6,10 +6,10 @@
    <modelVersion>4.0.0</modelVersion>
 
    <groupId>br.edu.ifpr</groupId>
-   <artifactId>mcp_server01</artifactId>
+   <artifactId>mcp_financas_pessoais</artifactId>
    <version>0.0.1-SNAPSHOT</version>
 
-   <name>MCP Client/Server - Exemplo 01</name>
+   <name>MCP Client/Server - Financas Pessoais</name>
 
    <properties>
       <skip.unit.tests>false</skip.unit.tests>
@@ -285,7 +285,7 @@ https://github.com/thought2code/mcp-java-sdk-examples/blob/main/mcp-server-files
             <skip.unit.tests>true</skip.unit.tests>
 
             <server-main-class>
-               br.edu.ifpr.mcp_server.main.McpServer01SyncStdio
+               br.edu.ifpr.mcp_financas_pessoais.main.McpServer01SyncStdio
             </server-main-class>
 
             <dist-dir>${project.basedir}/server</dist-dir>
@@ -379,7 +379,7 @@ https://github.com/thought2code/mcp-java-sdk-examples/blob/main/mcp-server-files
             <skip.unit.tests>true</skip.unit.tests>
 
             <client-main-class>
-               br.edu.ifpr.mcp_server.main.McpClient01SyncStdio
+               br.edu.ifpr.mcp_financas_pessoais.main.McpClient01SyncStdio
             </client-main-class>
 
             <dist-dir>dist-client</dist-dir>

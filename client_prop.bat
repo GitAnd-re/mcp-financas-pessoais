@@ -1,4 +1,4 @@
 
 cd target\dist-client
-java -Dmcp.files.root=D:\desenvolvimento -jar mcp_server01_client.jar
+java -Dmcp.files.root="C:\Arquivos Teste" -jar mcp_financas_pessoais_client.jar
 cd ..\..

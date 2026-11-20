@@ -1,4 +1,4 @@
-package br.edu.ifpr.mcp_server.utils.json.schema;
+package br.edu.ifpr.mcp_financas_pessoais.utils.json.schema;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

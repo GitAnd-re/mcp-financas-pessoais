@@ -51,7 +51,7 @@ services:
        - java
        - -Dmcp.files.root=${MCP_FILES_CONTAINER}
        - -jar
-       - ${MCP_CONTAINER}/server/mcp_server01_server.jar
+       - ${MCP_CONTAINER}/server/mcp_financas_pessoais_server.jar
 
    mcp-server:
       build:
@@ -74,4 +74,4 @@ services:
       command:
          - -Dmcp.files.root=${MCP_FILES_CONTAINER}
          - -jar
-         - ${MCP_CONTAINER}/server/mcp_server01_server.jar
+         - ${MCP_CONTAINER}/server/mcp_financas_pessoais_server.jar

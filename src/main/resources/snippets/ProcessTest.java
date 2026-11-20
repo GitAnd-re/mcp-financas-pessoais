@@ -33,7 +33,7 @@ public class ProcessTest {
 			            new ProcessBuilder(
 			                  "java",
 			                  "-jar",
-			                  "mcp_server01_server.jar"
+			                  "mcp_financas_pessoais_server.jar"
 			            )
 			            .inheritIO()
 			            .start();
