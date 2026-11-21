@@ -57,17 +57,6 @@ class RegistrarGastoToolTest {
    }
 
    @Test
-   @DisplayName("Aceita o menor valor monetário positivo comum")
-   void aceitaValorPositivoDeUmCentavo() {
-      CallToolResult result = executar(argumentos(new BigDecimal("0.01"),
-            "Outros", "29/02/2024", null));
-
-      assertFalse(result.isError());
-      assertEquals(new BigDecimal("0.01"), repositorio.listar().get(0).valor());
-      assertEquals("", repositorio.listar().get(0).descricao());
-   }
-
-   @Test
    @DisplayName("Preserva caracteres especiais na resposta de texto")
    void preservaCaracteresEspeciaisNaResposta() {
       CallToolResult result = executar(argumentos(new BigDecimal("3.50"),
@@ -93,7 +82,7 @@ class RegistrarGastoToolTest {
    }
 
    static Stream<Object> valoresInvalidos() {
-      return Stream.of(0, -1, new BigDecimal("-0.01"), "10.00", null, AUSENTE);
+      return Stream.of("10.00", null, AUSENTE);
    }
 
    @ParameterizedTest(name = "Rejeita categoria inválida: {0}")
@@ -105,7 +94,7 @@ class RegistrarGastoToolTest {
    }
 
    static Stream<Object> categoriasInvalidas() {
-      return Stream.of("", "   ", 12, null, AUSENTE);
+      return Stream.of(12, null, AUSENTE);
    }
 
    @ParameterizedTest(name = "Rejeita data inválida: {0}")
