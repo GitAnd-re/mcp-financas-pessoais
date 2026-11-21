@@ -1,0 +1,30 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "classpath:/json-schemas/registrar-gasto.schema.json",
+   "title": "Registrar gasto",
+   "description": "Registra um gasto nas finanças pessoais",
+   "type": "object",
+   "properties": {
+      "valor": {
+         "type": "number",
+         "exclusiveMinimum": 0,
+         "description": "Valor positivo do gasto"
+      },
+      "categoria": {
+         "type": "string",
+         "minLength": 1,
+         "description": "Categoria do gasto"
+      },
+      "data": {
+         "type": "string",
+         "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$",
+         "description": "Data válida do gasto no formato DD/MM/AAAA"
+      },
+      "descricao": {
+         "type": "string",
+         "description": "Descrição opcional do gasto"
+      }
+   },
+   "required": ["valor", "categoria", "data"],
+   "additionalProperties": false
+}
