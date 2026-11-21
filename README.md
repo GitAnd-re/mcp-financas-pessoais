@@ -53,6 +53,12 @@ Argumentos:
 **Simple Report Tool**: ferramenta de exemplo para um relatório simulado. Argumentos:
 * **id**: identificador do relatório (obrigatório).
 
+**Registrar gasto**: registra e salva um gasto no arquivo JSON de lançamentos no diretório autorizado. Retorna o registro criado, incluindo o identificador. Argumentos:
+* **valor**: valor do gasto (obrigatório).
+* **categoria**: categoria do gasto (pode já existir) (obrigatório).
+* **data**: data do gasto (obrigatório).
+* **descricao**: descrição do gasto (opcional).
+
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
 * **arquivo**: caminho para o arquivos PDF (obrigatório).

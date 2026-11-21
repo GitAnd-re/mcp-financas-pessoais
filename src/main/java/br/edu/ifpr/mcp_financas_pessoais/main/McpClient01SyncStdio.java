@@ -1,6 +1,10 @@
 package br.edu.ifpr.mcp_financas_pessoais.main;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +39,10 @@ import io.modelcontextprotocol.spec.McpSchema.Tool;
 import tools.jackson.databind.json.JsonMapper;
 
 public class McpClient01SyncStdio {
+   private static final DateTimeFormatter DATE_BR_FORMATTER =
+         DateTimeFormatter.ofPattern("dd/MM/uuuu")
+                          .withResolverStyle(ResolverStyle.STRICT);
+
    private static final Logger LOG =
                             LoggerFactory.getLogger(McpClient01SyncStdio.class);
    // nome e caminho para o servidor MCP
@@ -330,21 +338,42 @@ public class McpClient01SyncStdio {
             System.out.println("Este parâmetro é obrigatório.");
             continue;
          }
-         try { return convertValue(value,type,schema); }
+         try { return convertValue(value,name,type,schema); }
          catch (IllegalArgumentException ex) {
             System.out.println("Valor inválido: " + ex.getMessage());
          }
       }
    }
 
-   private Object convertValue(String value, String type, Map<?, ?> schema) {
+   private Object convertValue(String value, String name, String type,
+                               Map<?, ?> schema) {
+      if ("data".equalsIgnoreCase(name))
+         validateDate(value, schema);
+
       return switch (type) {
-    	        case "integer" -> Integer.valueOf(value);
-    	        case "number" -> Double.valueOf(value);
-    	        case "boolean" -> parseBoolean(value);
-    	        case "string" -> value;
-    	        default -> parseComplexValue(value,type,schema);
-             };
+         case "integer" -> Integer.valueOf(value);
+         case "number" -> Double.valueOf(value);
+         case "boolean" -> parseBoolean(value);
+         case "string" -> value;
+         default -> parseComplexValue(value, type, schema);
+      };
+   }
+
+   private void validateDate(String value, Map<?, ?> schema) {
+      Object patternObject = schema.get("pattern");
+      if (patternObject != null &&
+          !java.util.regex.Pattern.compile(String.valueOf(patternObject))
+                                  .matcher(value).matches())
+         throw new IllegalArgumentException(
+               "Informe uma data válida no formato DD/MM/AAAA.");
+
+      try {
+         LocalDate.parse(value, DATE_BR_FORMATTER);
+      }
+      catch (DateTimeParseException ex) {
+         throw new IllegalArgumentException(
+               "Informe uma data válida no formato DD/MM/AAAA.");
+      }
    }
 
    private Boolean parseBoolean(String value) {

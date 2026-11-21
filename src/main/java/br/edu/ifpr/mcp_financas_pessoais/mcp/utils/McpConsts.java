@@ -42,6 +42,12 @@ public final class McpConsts {
    // SimplReportToolIT
    public static final String SRT_TOOL_NAME              = "obter_documento";
    public static final String SRT_ATTR_ID                = "id";
+   // RegistrarGastoTool
+   public static final String RGT_TOOL_NAME        = "registrar_gasto";
+   public static final String RGT_ATTR_VALOR       = "valor";
+   public static final String RGT_ATTR_CATEGORIA   = "categoria";
+   public static final String RGT_ATTR_DATA        = "data";
+   public static final String RGT_ATTR_DESCRICAO   = "descricao";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

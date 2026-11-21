@@ -10,6 +10,7 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.GreetingPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.RootInfoResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.SimpleReportTool;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarGastoTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.AuthPathTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.FileSearchTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.moffice.word.MSWordParagraphCounterTool;
@@ -22,6 +23,8 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.McpPromptDefinition;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.McpResourceDefinition;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.McpToolDefinition;
 import br.edu.ifpr.mcp_financas_pessoais.services.files.FileSearchService;
+import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.JsonLancamentoRepositorio;
+import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.LancamentoRepositorio;
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServer.SingleSessionSyncSpecification;
@@ -44,6 +47,10 @@ public class McpServer01SyncStdio {
    // recurso de informação do diretório usado pelo servidor
    private FileSearchService fss = FileSearchService.fromConfiguration();
 
+   // Repositório único compartilhado pelas ferramentas financeiras.
+   private final LancamentoRepositorio lancamentoRepositorio =
+                                 JsonLancamentoRepositorio.fromEnvironment();
+
    private McpSyncServer server;
 
    private void registerTools(
@@ -51,6 +58,7 @@ public class McpServer01SyncStdio {
                 throws Exception {
       // cria a lista de ferramentas disponíveis no servidor....
       List<McpToolDefinition> tools = List.of(new SimpleReportTool(),
+                                              new RegistrarGastoTool(lancamentoRepositorio),
                                               new AuthPathTool(),
                                               new FileSearchTool(fss),
                                               new PdfSearchAndReplaceTool(),
