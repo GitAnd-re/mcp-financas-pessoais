@@ -54,10 +54,31 @@ Argumentos:
 * **id**: identificador do relatório (obrigatório).
 
 **Registrar gasto**: registra e salva um gasto no arquivo JSON de lançamentos no diretório autorizado. Retorna o registro criado, incluindo o identificador. Argumentos:
-* **valor**: valor do gasto (obrigatório).
-* **categoria**: categoria do gasto (pode já existir) (obrigatório).
-* **data**: data do gasto (obrigatório).
-* **descricao**: descrição do gasto (opcional).
+* **valor** (`number`, obrigatório): valor positivo do gasto.
+* **categoria** (`string`, obrigatório): categoria do gasto; não pode ser vazia ou conter apenas espaços.
+* **data** (`string`, obrigatório): data válida no formato `DD/MM/AAAA`.
+* **descricao** (`string`, opcional): descrição do gasto; se omitida, fica vazia.
+
+Resposta de sucesso (texto):
+
+```text
+id:c142a431-4c76-4efa-81a6-e34f6a15f17d, tipo:GASTO, valor:42.75, categoria:Transporte, data:20/11/2026, descricao:Ônibus
+```
+
+Erros possíveis:
+
+* Valor ausente ou que não seja número: `O valor deve ser informado como número.`
+* Valor inválido: `O valor informado é inválido.`
+* Valor menor ou igual a zero: `O valor deve ser maior que zero.`
+* Categoria ausente: `O campo categoria é obrigatório.`
+* Categoria que não seja texto: `O campo categoria deve ser texto.`
+* Categoria vazia ou só com espaços: `O campo categoria não pode ser vazio.`
+* Data ausente: `O campo data é obrigatório.`
+* Data que não seja texto: `O campo data deve ser texto.`
+* Data vazia: `O campo data não pode ser vazio.`
+* Data inválida ou fora do formato `DD/MM/AAAA`: `A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.`
+* Descrição que não seja texto: `O campo descrição deve ser texto.`
+* Falha ao salvar: `Não foi possível salvar o gasto: <mensagem da falha>.`
 
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:

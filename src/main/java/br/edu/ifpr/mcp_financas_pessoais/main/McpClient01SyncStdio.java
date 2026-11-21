@@ -1,6 +1,7 @@
 package br.edu.ifpr.mcp_financas_pessoais.main;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -352,7 +353,7 @@ public class McpClient01SyncStdio {
 
       return switch (type) {
          case "integer" -> Integer.valueOf(value);
-         case "number" -> Double.valueOf(value);
+         case "number" -> new BigDecimal(value);
          case "boolean" -> parseBoolean(value);
          case "string" -> value;
          default -> parseComplexValue(value, type, schema);
