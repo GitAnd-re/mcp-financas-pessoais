@@ -1,0 +1,26 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "classpath:/json-schemas/registrar-receita.schema.json",
+   "title": "Registrar receita",
+   "description": "Registra uma receita nas finanças pessoais",
+   "type": "object",
+   "properties": {
+      "valor": {
+         "type": "number",
+         "exclusiveMinimum": 0,
+         "description": "Valor positivo da receita"
+      },
+      "fonte": {
+         "type": "string",
+         "minLength": 1,
+         "description": "Fonte da receita"
+      },
+      "data": {
+         "type": "string",
+         "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}$",
+         "description": "Data válida da receita no formato DD/MM/AAAA"
+      }
+   },
+   "required": ["valor", "fonte", "data"],
+   "additionalProperties": false
+}

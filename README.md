@@ -80,6 +80,31 @@ Erros possíveis:
 * Descrição que não seja texto: `O campo descrição deve ser texto.`
 * Falha ao salvar: `Não foi possível salvar o gasto: <mensagem da falha>.`
 
+**Registrar receita**: registra e salva uma receita no mesmo arquivo JSON de lançamentos no diretório autorizado. Argumentos:
+* **valor** (`number`, obrigatório): valor positivo da receita.
+* **fonte** (`string`, obrigatório): origem da receita; não pode ser vazia ou conter apenas espaços.
+* **data** (`string`, obrigatório): data válida no formato `DD/MM/AAAA`.
+
+Resposta de sucesso (texto):
+
+```text
+id:3f7d1f6c-2f95-4f08-a070-df5b953f5231, tipo:RECEITA, valor:2500.00, fonte:Salário, data:20/11/2026
+```
+
+Erros possíveis:
+
+* Valor ausente ou que não seja número: `O valor deve ser informado como número.`
+* Valor inválido: `O valor informado é inválido.`
+* Valor menor ou igual a zero: `O valor deve ser maior que zero.`
+* Fonte ausente: `O campo fonte é obrigatório.`
+* Fonte que não seja texto: `O campo fonte deve ser texto.`
+* Fonte vazia ou só com espaços: `O campo fonte não pode ser vazio.`
+* Data ausente: `O campo data é obrigatório.`
+* Data que não seja texto: `O campo data deve ser texto.`
+* Data vazia: `O campo data não pode ser vazio.`
+* Data inválida ou fora do formato `DD/MM/AAAA`: `A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.`
+* Falha ao salvar: `Não foi possível salvar a receita: <mensagem da falha>.`
+
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
 * **arquivo**: caminho para o arquivos PDF (obrigatório).

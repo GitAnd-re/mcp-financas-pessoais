@@ -48,6 +48,11 @@ public final class McpConsts {
    public static final String RGT_ATTR_CATEGORIA   = "categoria";
    public static final String RGT_ATTR_DATA        = "data";
    public static final String RGT_ATTR_DESCRICAO   = "descricao";
+   // RegistrarReceitaTool
+   public static final String RRT_TOOL_NAME  = "registrar_receita";
+   public static final String RRT_ATTR_VALOR = "valor";
+   public static final String RRT_ATTR_FONTE = "fonte";
+   public static final String RRT_ATTR_DATA  = "data";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

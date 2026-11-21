@@ -11,6 +11,7 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.RootInfoResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.SimpleReportTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarGastoTool;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarReceitaTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.AuthPathTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.FileSearchTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.moffice.word.MSWordParagraphCounterTool;
@@ -59,6 +60,7 @@ public class McpServer01SyncStdio {
       // cria a lista de ferramentas disponíveis no servidor....
       List<McpToolDefinition> tools = List.of(new SimpleReportTool(),
                                               new RegistrarGastoTool(lancamentoRepositorio),
+                                              new RegistrarReceitaTool(lancamentoRepositorio),
                                               new AuthPathTool(),
                                               new FileSearchTool(fss),
                                               new PdfSearchAndReplaceTool(),
