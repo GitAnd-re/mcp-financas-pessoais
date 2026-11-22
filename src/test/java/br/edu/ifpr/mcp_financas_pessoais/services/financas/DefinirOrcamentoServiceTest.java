@@ -36,15 +36,18 @@ class DefinirOrcamentoServiceTest {
    @Test
    @DisplayName("Definir orçamento e normalizar a categoria")
    void defineOrcamento() throws IOException {
-      Orcamento salvo = service.definir("  Alimentação  ", new BigDecimal("500.00"));
-      assertEquals(new Orcamento("Alimentação", new BigDecimal("500.00")), salvo);
+      Orcamento salvo = service.definir("  Alimentação  ", 11, 2026,
+            new BigDecimal("500.00"));
+      assertEquals(new Orcamento("Alimentação", 11, 2026,
+            new BigDecimal("500.00")), salvo);
       assertEquals(List.of(salvo), repositorio.listar());
    }
 
    @Test
    @DisplayName("Aceitar limite positivo de um centavo")
    void aceitaUmCentavo() throws IOException {
-      Orcamento salvo = service.definir("Outros", new BigDecimal("0.01"));
+      Orcamento salvo = service.definir("Outros", 2, 2024,
+            new BigDecimal("0.01"));
       assertEquals(new BigDecimal("0.01"), salvo.limiteMensal());
    }
 
@@ -53,7 +56,7 @@ class DefinirOrcamentoServiceTest {
    void rejeitaCategoriaInvalida() {
       for (String categoria : new String[] { null, "", "   " }) {
          IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-               () -> service.definir(categoria, BigDecimal.ONE));
+               () -> service.definir(categoria, 11, 2026, BigDecimal.ONE));
          assertEquals("A categoria não pode ser vazia.", exception.getMessage());
       }
       assertEquals(List.of(), repositorio.listar());
@@ -64,9 +67,29 @@ class DefinirOrcamentoServiceTest {
    void rejeitaCategoriaNumerica() {
       for (String categoria : new String[] { "123", "10.50", "-2", "1e3" }) {
          IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-               () -> service.definir(categoria, BigDecimal.ONE));
+               () -> service.definir(categoria, 11, 2026, BigDecimal.ONE));
          assertEquals("A categoria não pode ser um número.", exception.getMessage());
       }
+      assertEquals(List.of(), repositorio.listar());
+   }
+
+   @Test
+   @DisplayName("Rejeitar mês fora do intervalo de 1 a 12")
+   void rejeitaMesInvalido() {
+      for (int mes : new int[] { 0, 13 }) {
+         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+               () -> service.definir("Mercado", mes, 2026, BigDecimal.ONE));
+         assertEquals("O mês deve estar entre 1 e 12.", exception.getMessage());
+      }
+      assertEquals(List.of(), repositorio.listar());
+   }
+
+   @Test
+   @DisplayName("Rejeitar ano menor que um")
+   void rejeitaAnoInvalido() {
+      IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+            () -> service.definir("Mercado", 11, 0, BigDecimal.ONE));
+      assertEquals("O ano deve ser maior que zero.", exception.getMessage());
       assertEquals(List.of(), repositorio.listar());
    }
 
@@ -76,7 +99,7 @@ class DefinirOrcamentoServiceTest {
       for (BigDecimal limite : new BigDecimal[] { null, BigDecimal.ZERO,
             new BigDecimal("-0.01") }) {
          IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-               () -> service.definir("Mercado", limite));
+               () -> service.definir("Mercado", 11, 2026, limite));
          assertEquals("O limite mensal deve ser maior que zero.", exception.getMessage());
       }
       assertEquals(List.of(), repositorio.listar());
@@ -85,8 +108,9 @@ class DefinirOrcamentoServiceTest {
    @Test
    @DisplayName("Atualizar o limite da mesma categoria")
    void atualizaCategoriaExistente() throws IOException {
-      service.definir("Mercado", new BigDecimal("100.00"));
-      Orcamento atualizado = service.definir("Mercado", new BigDecimal("150.00"));
+      service.definir("Mercado", 11, 2026, new BigDecimal("100.00"));
+      Orcamento atualizado = service.definir("Mercado", 11, 2026,
+            new BigDecimal("150.00"));
       assertEquals(new BigDecimal("150.00"), atualizado.limiteMensal());
       assertEquals(List.of(atualizado), repositorio.listar());
    }
@@ -107,7 +131,7 @@ class DefinirOrcamentoServiceTest {
       };
       DefinirOrcamentoService serviceComFalha = new DefinirOrcamentoService(comFalha);
       IOException exception = assertThrows(IOException.class,
-            () -> serviceComFalha.definir("Mercado", BigDecimal.ONE));
+            () -> serviceComFalha.definir("Mercado", 11, 2026, BigDecimal.ONE));
       assertEquals("falha de gravação", exception.getMessage());
    }
 }

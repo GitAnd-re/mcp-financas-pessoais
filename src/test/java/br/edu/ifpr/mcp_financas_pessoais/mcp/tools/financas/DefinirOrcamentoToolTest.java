@@ -33,12 +33,13 @@ class DefinirOrcamentoToolTest {
    }
 
    @Test
-   @DisplayName("Definir orçamento e retornar texto com categoria e limite")
+   @DisplayName("Definir orçamento e retornar texto com categoria, período e limite")
    void defineOrcamento() {
       CallToolResult result = executar(argumentos("Alimentação",
             new BigDecimal("500.00")));
       assertFalse(result.isError());
-      assertEquals("categoria:Alimentação, limite_mensal:500.00", texto(result));
+      assertEquals("categoria:Alimentação, mes:11, ano:2026, limite_mensal:500.00",
+            texto(result));
       assertEquals(1, repositorio.listar().size());
    }
 
@@ -96,6 +97,30 @@ class DefinirOrcamentoToolTest {
    }
 
    @Test
+   @DisplayName("Rejeitar mês ausente ou que não seja inteiro")
+   void rejeitaMesInvalido() {
+      Map<String, Object> ausente = argumentos("Mercado", BigDecimal.ONE);
+      ausente.remove(McpConsts.DOT_ATTR_MES);
+      assertErro(ausente, "mês é obrigatório");
+      assertErro(argumentosComPeriodo("Mercado", BigDecimal.ONE, "11", 2026),
+            "mês deve ser informado como número inteiro");
+      assertErro(argumentosComPeriodo("Mercado", BigDecimal.ONE, 11.5, 2026),
+            "mês deve ser informado como número inteiro");
+   }
+
+   @Test
+   @DisplayName("Rejeitar ano ausente ou que não seja inteiro")
+   void rejeitaAnoInvalido() {
+      Map<String, Object> ausente = argumentos("Mercado", BigDecimal.ONE);
+      ausente.remove(McpConsts.DOT_ATTR_ANO);
+      assertErro(ausente, "ano é obrigatório");
+      assertErro(argumentosComPeriodo("Mercado", BigDecimal.ONE, 11, "2026"),
+            "ano deve ser informado como número inteiro");
+      assertErro(argumentosComPeriodo("Mercado", BigDecimal.ONE, 11, 2026.5),
+            "ano deve ser informado como número inteiro");
+   }
+
+   @Test
    @DisplayName("Retornar erro se a persistência falhar")
    void retornaErroQuandoPersistenciaFalha() {
       OrcamentoRepositorio comFalha = new OrcamentoRepositorio() {
@@ -135,9 +160,18 @@ class DefinirOrcamentoToolTest {
    }
 
    private static Map<String, Object> argumentos(Object categoria, Object limite) {
+      return argumentosComPeriodo(categoria, limite, 11, 2026);
+   }
+
+   private static Map<String, Object> argumentosComPeriodo(Object categoria,
+         Object limite, Object mes, Object ano) {
       Map<String, Object> args = new HashMap<>();
       if (categoria != AUSENTE)
          args.put(McpConsts.DOT_ATTR_CATEGORIA, categoria);
+      if (mes != AUSENTE)
+         args.put(McpConsts.DOT_ATTR_MES, mes);
+      if (ano != AUSENTE)
+         args.put(McpConsts.DOT_ATTR_ANO, ano);
       if (limite != AUSENTE)
          args.put(McpConsts.DOT_ATTR_LIMITE_MENSAL, limite);
       return args;

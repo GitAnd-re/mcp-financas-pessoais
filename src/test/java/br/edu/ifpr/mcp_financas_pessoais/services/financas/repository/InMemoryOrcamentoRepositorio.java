@@ -11,7 +11,9 @@ public final class InMemoryOrcamentoRepositorio implements OrcamentoRepositorio 
    @Override
    public void salvar(Orcamento orcamento) {
       for (int i = 0; i < orcamentos.size(); i++) {
-         if (orcamentos.get(i).categoria().equals(orcamento.categoria())) {
+         Orcamento salvo = orcamentos.get(i);
+         if (salvo.categoria().equals(orcamento.categoria()) &&
+               salvo.mes() == orcamento.mes() && salvo.ano() == orcamento.ano()) {
             orcamentos.set(i, orcamento);
             return;
          }

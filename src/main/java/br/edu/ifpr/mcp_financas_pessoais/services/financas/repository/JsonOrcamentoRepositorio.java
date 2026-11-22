@@ -37,7 +37,9 @@ public class JsonOrcamentoRepositorio implements OrcamentoRepositorio {
       List<Orcamento> orcamentos = lerDados();
       boolean atualizado = false;
       for (int i = 0; i < orcamentos.size(); i++) {
-         if (orcamentos.get(i).categoria().equals(orcamento.categoria())) {
+         Orcamento salvo = orcamentos.get(i);
+         if (salvo.categoria().equals(orcamento.categoria()) &&
+               salvo.mes() == orcamento.mes() && salvo.ano() == orcamento.ano()) {
             orcamentos.set(i, orcamento);
             atualizado = true;
             break;
@@ -76,16 +78,18 @@ public class JsonOrcamentoRepositorio implements OrcamentoRepositorio {
       }
    }
 
-   private record DadosOrcamento(String categoria, BigDecimal limite_mensal) {
+   private record DadosOrcamento(String categoria, int mes, int ano,
+                                 BigDecimal limite_mensal) {
       static DadosOrcamento fromModel(Orcamento orcamento) {
-         return new DadosOrcamento(orcamento.categoria(), orcamento.limiteMensal());
+         return new DadosOrcamento(orcamento.categoria(), orcamento.mes(),
+               orcamento.ano(), orcamento.limiteMensal());
       }
 
       Orcamento toModel() {
          if (categoria == null || limite_mensal == null)
             throw new IllegalArgumentException(
                   "O arquivo JSON contém um campo obrigatório ausente.");
-         return new Orcamento(categoria, limite_mensal);
+         return new Orcamento(categoria, mes, ano, limite_mensal);
       }
    }
 }

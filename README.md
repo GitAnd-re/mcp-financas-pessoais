@@ -162,12 +162,14 @@ Erros possíveis:
 
 **Definir orçamento**: salva ou atualiza o limite mensal de gastos de uma categoria no arquivo `orcamentos.json`, no diretório autorizado. Argumentos:
 * **categoria** (`string`, obrigatório): categoria a orçar; não pode ser vazia ou conter apenas espaços.
+* **mes** (`integer`, obrigatório): mês ao qual o orçamento se aplica, de 1 a 12.
+* **ano** (`integer`, obrigatório): ano ao qual o orçamento se aplica, maior que zero.
 * **limite_mensal** (`number`, obrigatório): limite positivo de gastos mensais.
 
 Resposta de sucesso (texto):
 
 ```text
-categoria:Alimentação, limite_mensal:500.00
+categoria:Alimentação, mes:11, ano:2026, limite_mensal:500.00
 ```
 
 Erros possíveis:
@@ -176,6 +178,8 @@ Erros possíveis:
 * Categoria que não seja texto: `O campo categoria deve ser texto.`
 * Categoria vazia ou só com espaços: `A categoria não pode ser vazia.`
 * Categoria composta apenas por número: `A categoria não pode ser um número.`
+* Mês menor que 1 ou maior que 12 (rejeitado pela validação do schema MCP).
+* Ano menor que 1 (rejeitado pela validação do schema MCP).
 * Limite mensal ausente: `O campo limite_mensal é obrigatório.`
 * Limite mensal que não seja número: `O limite mensal deve ser informado como número.`
 * Limite mensal inválido: `O limite mensal informado é inválido.`

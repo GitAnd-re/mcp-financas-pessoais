@@ -50,9 +50,11 @@ public class DefinirOrcamentoTool implements McpToolDefinition {
       try {
          Map<String, Object> args = request.arguments();
          String categoria = readCategoria(args.get(McpConsts.DOT_ATTR_CATEGORIA));
+         int mes = readInteger(args.get(McpConsts.DOT_ATTR_MES), "mês");
+         int ano = readInteger(args.get(McpConsts.DOT_ATTR_ANO), "ano");
          BigDecimal limite = readLimite(args.get(McpConsts.DOT_ATTR_LIMITE_MENSAL));
          Orcamento orcamento = new DefinirOrcamentoService(repositorio)
-               .definir(categoria, limite);
+               .definir(categoria, mes, ano, limite);
          return createResult(formatarResposta(orcamento), false);
       }
       catch (IllegalArgumentException ex) {
@@ -87,8 +89,25 @@ public class DefinirOrcamentoTool implements McpToolDefinition {
 
    private static String formatarResposta(Orcamento orcamento) {
       return new StringBuilder("categoria:").append(orcamento.categoria())
+            .append(", mes:").append(orcamento.mes())
+            .append(", ano:").append(orcamento.ano())
             .append(", limite_mensal:")
             .append(orcamento.limiteMensal().toPlainString()).toString();
+   }
+
+   private static int readInteger(Object value, String nome) {
+      if (value == null)
+         throw new IllegalArgumentException("O campo " + nome + " é obrigatório.");
+      if (!(value instanceof Number))
+         throw new IllegalArgumentException("O campo " + nome +
+               " deve ser informado como número inteiro.");
+      try {
+         return new BigDecimal(value.toString()).intValueExact();
+      }
+      catch (NumberFormatException | ArithmeticException ex) {
+         throw new IllegalArgumentException("O campo " + nome +
+               " deve ser informado como número inteiro.");
+      }
    }
 
    private static CallToolResult createResult(String message, boolean isError) {

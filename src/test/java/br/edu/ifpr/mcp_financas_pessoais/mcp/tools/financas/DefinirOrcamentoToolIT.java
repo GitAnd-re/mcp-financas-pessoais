@@ -69,6 +69,8 @@ class DefinirOrcamentoToolIT {
             McpConsts.DOT_TOOL_NAME.equals(tool.name())));
       CallToolRequest request = CallToolRequest.builder(McpConsts.DOT_TOOL_NAME)
             .arguments(Map.of(McpConsts.DOT_ATTR_CATEGORIA, "Alimentação",
+                  McpConsts.DOT_ATTR_MES, 11,
+                  McpConsts.DOT_ATTR_ANO, 2026,
                   McpConsts.DOT_ATTR_LIMITE_MENSAL, new BigDecimal("500.00")))
             .build();
       CallToolResult result = client.callTool(request);
@@ -76,10 +78,13 @@ class DefinirOrcamentoToolIT {
       assertFalse(result.isError());
       String response = ((TextContent) result.content().get(0)).text();
       assertTrue(response.contains("categoria:Alimentação"));
+      assertTrue(response.contains("mes:11, ano:2026"), response);
       assertTrue(response.contains("limite_mensal:500"), response);
       assertTrue(Files.isRegularFile(arquivoDados));
       String saved = Files.readString(arquivoDados);
       assertTrue(saved.contains("\"categoria\""));
+      assertTrue(saved.contains("\"mes\""));
+      assertTrue(saved.contains("\"ano\""));
       assertTrue(saved.contains("\"limite_mensal\""));
       assertTrue(saved.contains("Alimentação"));
       assertTrue(saved.contains("500"));
@@ -90,6 +95,8 @@ class DefinirOrcamentoToolIT {
    void retornaErroParaLimiteZero() {
       CallToolRequest request = CallToolRequest.builder(McpConsts.DOT_TOOL_NAME)
             .arguments(Map.of(McpConsts.DOT_ATTR_CATEGORIA, "Alimentação",
+                  McpConsts.DOT_ATTR_MES, 11,
+                  McpConsts.DOT_ATTR_ANO, 2026,
                   McpConsts.DOT_ATTR_LIMITE_MENSAL, BigDecimal.ZERO))
             .build();
       CallToolResult result = client.callTool(request);
@@ -103,6 +110,8 @@ class DefinirOrcamentoToolIT {
    void retornaErroParaCategoriaNumerica() {
       CallToolRequest request = CallToolRequest.builder(McpConsts.DOT_TOOL_NAME)
             .arguments(Map.of(McpConsts.DOT_ATTR_CATEGORIA, "123",
+                  McpConsts.DOT_ATTR_MES, 11,
+                  McpConsts.DOT_ATTR_ANO, 2026,
                   McpConsts.DOT_ATTR_LIMITE_MENSAL, new BigDecimal("500.00")))
             .build();
       CallToolResult result = client.callTool(request);

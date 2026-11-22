@@ -15,17 +15,23 @@ public class DefinirOrcamentoService {
       this.repositorio = repositorio;
    }
 
-   public Orcamento definir(String categoria, BigDecimal limiteMensal)
+   public Orcamento definir(String categoria, int mes, int ano,
+                            BigDecimal limiteMensal)
          throws IOException {
       if (categoria == null || categoria.isBlank())
          throw new IllegalArgumentException("A categoria não pode ser vazia.");
       String categoriaNormalizada = categoria.trim();
       if (ehNumero(categoriaNormalizada))
          throw new IllegalArgumentException("A categoria não pode ser um número.");
+      if (mes < 1 || mes > 12)
+         throw new IllegalArgumentException("O mês deve estar entre 1 e 12.");
+      if (ano < 1)
+         throw new IllegalArgumentException("O ano deve ser maior que zero.");
       if (limiteMensal == null || limiteMensal.signum() <= 0)
          throw new IllegalArgumentException("O limite mensal deve ser maior que zero.");
 
-      Orcamento orcamento = new Orcamento(categoriaNormalizada, limiteMensal);
+      Orcamento orcamento = new Orcamento(categoriaNormalizada, mes, ano,
+            limiteMensal);
       repositorio.salvar(orcamento);
       return orcamento;
    }

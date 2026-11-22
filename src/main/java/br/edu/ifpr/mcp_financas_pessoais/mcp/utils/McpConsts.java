@@ -65,6 +65,8 @@ public final class McpConsts {
    // DefinirOrcamentoTool
    public static final String DOT_TOOL_NAME = "definir_orcamento";
    public static final String DOT_ATTR_CATEGORIA = "categoria";
+   public static final String DOT_ATTR_MES = "mes";
+   public static final String DOT_ATTR_ANO = "ano";
    public static final String DOT_ATTR_LIMITE_MENSAL = "limite_mensal";
    // VerificarOrcamentoTool
    public static final String VOT_TOOL_NAME = "verificar_orcamento";
