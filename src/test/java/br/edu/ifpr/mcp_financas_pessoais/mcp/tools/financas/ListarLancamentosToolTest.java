@@ -44,11 +44,12 @@ class ListarLancamentosToolTest {
       assertFalse(result.isError());
       String text = texto(result);
       assertTrue(text.startsWith("Lançamentos de 11/2026:"));
-      assertTrue(text.contains("id:id-gasto, tipo:GASTO, valor:10.00"));
+      assertTrue(text.contains("tipo:GASTO, valor:10.00"));
       assertTrue(text.contains("categoria:Mercado, fonte:null"));
-      assertTrue(text.contains("id:id-receita, tipo:RECEITA, valor:20.50"));
+      assertTrue(text.contains("tipo:RECEITA, valor:20.50"));
       assertTrue(text.contains("categoria:null, fonte:Salário"));
       assertTrue(text.contains("data:21/11/2026"));
+      assertFalse(text.contains("id:"));
    }
 
    @Test
@@ -66,9 +67,9 @@ class ListarLancamentosToolTest {
       assertFalse(result.isError());
       String text = texto(result);
       assertTrue(text.startsWith("Lançamentos de 2026:"));
-      assertTrue(text.contains("id:novembro"));
-      assertTrue(text.contains("id:outubro"));
-      assertFalse(text.contains("id:outro-ano"));
+      assertTrue(text.contains("data:20/11/2026"));
+      assertTrue(text.contains("data:21/10/2026"));
+      assertFalse(text.contains("data:20/10/2025"));
    }
 
    @Test
@@ -83,8 +84,8 @@ class ListarLancamentosToolTest {
             "categoria", "Mercado"));
 
       assertFalse(result.isError());
-      assertTrue(texto(result).contains("id:mercado"));
-      assertFalse(texto(result).contains("id:lazer"));
+      assertTrue(texto(result).contains("categoria:Mercado"));
+      assertFalse(texto(result).contains("categoria:Lazer"));
    }
 
    @Test

@@ -103,8 +103,7 @@ public class ListarLancamentosTool implements McpToolDefinition {
    }
 
    private static String formatarLancamento(Lancamento lancamento) {
-      return new StringBuilder("id:").append(lancamento.id())
-            .append(", tipo:").append(lancamento.tipo().name())
+      return new StringBuilder("tipo:").append(lancamento.tipo().name())
             .append(", valor:").append(lancamento.valor().toPlainString())
             .append(", categoria:").append(lancamento.categoria())
             .append(", fonte:").append(lancamento.fonte())

@@ -98,9 +98,10 @@ class ListarLancamentosToolIT {
       assertFalse(result.isError());
       String response = ((TextContent) result.content().get(0)).text();
       assertTrue(response.startsWith("Lançamentos de 04/2040:"));
-      assertTrue(response.contains(", tipo:GASTO"));
+      assertTrue(response.contains("tipo:GASTO"));
       assertTrue(response.contains(", categoria:Curso"));
       assertTrue(response.contains(", data:20/04/2040"));
+      assertFalse(response.contains("id:"));
       assertFalse(response.contains("Mercado"));
       assertFalse(response.contains("Bolsa"));
 
