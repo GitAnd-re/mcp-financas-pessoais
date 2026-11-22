@@ -54,71 +54,15 @@ public class RegistrarReceitaTool implements McpToolDefinition {
    @Override
    public CallToolResult run(McpSyncServerExchange exchange,
                              CallToolRequest request) {
-      String msg = "";
       try {
          Map<String, Object> args = request.arguments();
+         BigDecimal valor = readValor(args.get(McpConsts.RRT_ATTR_VALOR));
+         String fonte = readTextoObrigatorio(
+               args.get(McpConsts.RRT_ATTR_FONTE), "fonte");
+         LocalDate data = readData(args.get(McpConsts.RRT_ATTR_DATA));
 
-         Object valorArgumento = args.get(McpConsts.RRT_ATTR_VALOR);
-         BigDecimal valor = null;
-         if (!(valorArgumento instanceof Number)) {
-            msg = "O valor deve ser informado como número.";
-         }
-         else {
-            try {
-               valor = new BigDecimal(valorArgumento.toString());
-            }
-            catch (NumberFormatException ex) {
-               msg = "O valor informado é inválido.";
-            }
-         }
-
-         Object fonteArgumento = args.get(McpConsts.RRT_ATTR_FONTE);
-         String fonte = null;
-         if (!(fonteArgumento instanceof String)) {
-            if (fonteArgumento == null && msg.isEmpty())
-               msg = "O campo fonte é obrigatório.";
-            else if (msg.isEmpty())
-               msg = "O campo fonte deve ser texto.";
-         }
-         else
-            fonte = (String) fonteArgumento;
-
-         Object dataArgumento = args.get(McpConsts.RRT_ATTR_DATA);
-         String dataTexto = null;
-         if (!(dataArgumento instanceof String)) {
-            if (dataArgumento == null && msg.isEmpty())
-               msg = "O campo data é obrigatório.";
-            else if (msg.isEmpty())
-               msg = "O campo data deve ser texto.";
-         }
-         else {
-            dataTexto = (String) dataArgumento;
-            if (dataTexto.isBlank() && msg.isEmpty())
-               msg = "O campo data não pode ser vazio.";
-         }
-
-         LocalDate data = null;
-         if (dataTexto != null && !dataTexto.isBlank() && msg.isEmpty()) {
-            try {
-               data = LocalDate.parse(dataTexto, DATE_FORMATTER);
-            }
-            catch (DateTimeParseException ex) {
-               msg = "A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.";
-               return createResult(msg, true);
-            }
-         }
-
-         if (!msg.isEmpty())
-            return createResult(msg, true);
-
-         RegistrarReceitaService service = new RegistrarReceitaService(repositorio);
-         Lancamento lancamento;
-         try {
-            lancamento = service.registrar(valor, fonte, data);
-         }
-         catch (IllegalArgumentException ex) {
-            return createResult(ex.getMessage(), true);
-         }
+         Lancamento lancamento = new RegistrarReceitaService(repositorio)
+               .registrar(valor, fonte, data);
 
          StringBuilder response = new StringBuilder();
          response.append("id:").append(lancamento.id())
@@ -128,8 +72,43 @@ public class RegistrarReceitaTool implements McpToolDefinition {
                  .append(", data:").append(lancamento.data().format(DATE_FORMATTER));
          return createResult(response.toString(), false);
       }
+      catch (IllegalArgumentException ex) {
+         return createResult(ex.getMessage(), true);
+      }
       catch (Exception ex) {
          return createResult("Não foi possível salvar a receita: " + ex.getMessage(), true);
+      }
+   }
+
+   private static BigDecimal readValor(Object value) {
+      if (!(value instanceof Number))
+         throw new IllegalArgumentException("O valor deve ser informado como número.");
+      try {
+         return new BigDecimal(value.toString());
+      }
+      catch (NumberFormatException ex) {
+         throw new IllegalArgumentException("O valor informado é inválido.");
+      }
+   }
+
+   private static String readTextoObrigatorio(Object value, String nome) {
+      if (value == null)
+         throw new IllegalArgumentException("O campo " + nome + " é obrigatório.");
+      if (!(value instanceof String))
+         throw new IllegalArgumentException("O campo " + nome + " deve ser texto.");
+      return (String) value;
+   }
+
+   private static LocalDate readData(Object value) {
+      String texto = readTextoObrigatorio(value, "data");
+      if (texto.isBlank())
+         throw new IllegalArgumentException("O campo data não pode ser vazio.");
+      try {
+         return LocalDate.parse(texto, DATE_FORMATTER);
+      }
+      catch (DateTimeParseException ex) {
+         throw new IllegalArgumentException(
+               "A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.");
       }
    }
 
