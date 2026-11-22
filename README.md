@@ -217,7 +217,7 @@ Este projeto entrega duas aplicações: servidor e cliente. O servidor é execut
 
 Inicialmente, é preciso gerar a aplicação servidor e, em seguida, executar o cliente, tanto no [Eclipse IDE](https://www.eclipse.org/) quanto em linha de comando (CLI - *Command Line Interface*).
 
-Além disto, é possível executar o servidor MCP Java em assistentes de IA locais, tais como [Claude Desktop](https://claude.com/product/overview), [Gemini CLI](https://geminicli.com/) e [Cursor CLI](https://cursor.com/cli).
+Além disto, é possível executar o servidor MCP Java no assistente de IA da Anthropic, o [Claude Desktop](https://claude.com/product/overview).
 
 Também é possível verificar e testar o servidor MCP Java com o [MCP Inspector](https://github.com/modelcontextprotocol/inspector), ferramenta interativa para testar e depurar servidores MCP. Mais adiante, este documento mostra os passos necessários para executar o MCP Inspector em um contêiner Docker no Docker Desktop, juntamente com os arquivos `Dockerfile` e `compose.yaml`, disponíveis na raiz do projeto.
 
@@ -253,7 +253,10 @@ mvn clean package -Pclient -DskipTests
 # executar o cliente MCP Java, que executará o servidor MCP Java
 # DIRETÓRIO_AUTORIZADO é passado como parâmetro ao cliente, que
 # repassará ao servidor
-java -jar mcp_financas_pessoais_client.jar DIRETÓRIO_AUTORIZADO
+
+chcp 65001 >nul
+cd target\dist-client
+java -Dstdin.encoding=UTF-8 -Dstdout.encoding=UTF-8 -jar mcp_financas_pessoais_client.jar DIRETÓRIO_AUTORIZADO
 ```
 
 ou
@@ -262,8 +265,11 @@ ou
 # executar o cliente MCP Java, que executará o servidor MCP Java
 # DIRETÓRIO_AUTORIZADO é disponibilizado por meio da variável
 # de ambiente MCP_FILES_ROOT e será repassado ao servidor
+
+chcp 65001 >nul
+cd target\dist-client
 set MCP_FILES_ROOT=DIRETÓRIO_AUTORIZADO
-java -jar mcp_financas_pessoais_client.jar
+java -Dstdin.encoding=UTF-8 -Dstdout.encoding=UTF-8 -jar mcp_financas_pessoais_client.jar
 set MCP_FILES_ROOT=
 ```
 
@@ -273,6 +279,9 @@ ou
 # executar o cliente MCP Java, que executará o servidor MCP Java
 # DIRETÓRIO_AUTORIZADO é disponibilizado por meio de um parâmetro
 # à JVM (propriedade) e será repassado ao servidor
+
+chcp 65001 >nul
+cd target\dist-client
 java -Dmcp.files.root=DIRETÓRIO_AUTORIZADO  -jar mcp_financas_pessoais_client.jar
 ```
 
