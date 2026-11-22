@@ -72,6 +72,11 @@ public final class McpConsts {
    public static final String VOT_TOOL_NAME = "verificar_orcamento";
    public static final String VOT_ATTR_MES = "mes";
    public static final String VOT_ATTR_ANO = "ano";
+   // SimularParcelamentoTool
+   public static final String SPT_TOOL_NAME = "simular_parcelamento";
+   public static final String SPT_ATTR_VALOR = "valor";
+   public static final String SPT_ATTR_PARCELAS = "parcelas";
+   public static final String SPT_ATTR_TAXA_JUROS_MENSAL = "taxa_juros_mensal";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

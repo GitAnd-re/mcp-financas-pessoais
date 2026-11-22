@@ -209,6 +209,38 @@ Erros possíveis:
 * Orçamento não definido para o mês e ano informados: `Nenhum orçamento foi definido para 11/2026.`
 * Falha ao ler orçamentos ou lançamentos: `Não foi possível verificar os orçamentos: <mensagem da falha>.`
 
+**Simular parcelamento**: calcula parcelas mensais iguais pelo sistema Price e compara o custo total com o pagamento à vista. Valores monetários são exibidos com duas casas decimais; total e juros são calculados antes do arredondamento da parcela. Argumentos:
+* **valor** (`number`, obrigatório): valor positivo da compra.
+* **parcelas** (`integer`, obrigatório): quantidade de parcelas, no mínimo 1.
+* **taxa_juros_mensal** (`number`, obrigatório): percentual de juros mensal, não negativo. Por exemplo, `2.5` representa 2,5% ao mês; zero indica parcelamento sem juros.
+
+Resposta de sucesso (texto):
+
+```text
+Simulação de parcelamento:
+parcelas:12
+valor_parcela:94.56
+total_pago:1134.72
+juros_pagos:134.72
+pagamento_a_vista:1000.00
+economia_pagando_a_vista:134.72
+```
+
+Erros possíveis:
+
+* Valor ausente: `O campo valor é obrigatório.`
+* Valor que não seja número: `O campo valor deve ser informado como número.`
+* Valor inválido: `O campo valor informado é inválido.`
+* Valor menor ou igual a zero: `Validation failed: JSON schema validation errors: [/valor: deve ter um valor mínimo exclusivo de 0]`
+* Parcelas ausentes: `O campo parcelas é obrigatório.`
+* Parcelas que não sejam inteiras: `O campo parcelas deve ser informado como número inteiro.`
+* Parcelas menores que 1: `Validation failed: JSON schema validation errors: [/parcelas: deve ter um valor mínimo de 1]`
+* Taxa ausente: `O campo taxa de juros mensal é obrigatório.`
+* Taxa que não seja número: `O campo taxa de juros mensal deve ser informado como número.`
+* Taxa inválida: `O campo taxa de juros mensal informado é inválido.`
+* Taxa negativa: `Validation failed: JSON schema validation errors: [/taxa_juros_mensal: deve ter um valor mínimo de 0]`
+* Falha no cálculo: `Não foi possível simular o parcelamento: <mensagem da falha>.`
+
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
 * **arquivo**: caminho para o arquivos PDF (obrigatório).

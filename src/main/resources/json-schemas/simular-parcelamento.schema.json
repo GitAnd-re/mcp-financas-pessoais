@@ -1,0 +1,26 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "classpath:/json-schemas/simular-parcelamento.schema.json",
+   "title": "Simular parcelamento",
+   "description": "Calcula parcelas fixas pelo sistema Price e compara com o pagamento à vista",
+   "type": "object",
+   "properties": {
+      "valor": {
+         "type": "number",
+         "exclusiveMinimum": 0,
+         "description": "Valor da compra"
+      },
+      "parcelas": {
+         "type": "integer",
+         "minimum": 1,
+         "description": "Quantidade de parcelas"
+      },
+      "taxa_juros_mensal": {
+         "type": "number",
+         "minimum": 0,
+         "description": "Taxa de juros mensal em percentual; 2.5 representa 2,5%"
+      }
+   },
+   "required": ["valor", "parcelas", "taxa_juros_mensal"],
+   "additionalProperties": false
+}
