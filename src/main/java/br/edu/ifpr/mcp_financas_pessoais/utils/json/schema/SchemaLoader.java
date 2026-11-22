@@ -32,34 +32,4 @@ public class SchemaLoader {
                                     "JSON",e);
       }
    }
-
-   public static Map<String, Object> readFromString(String jsonContent) {
-      // converte diretamente uma String contendo o esquema JSON para
-      // Map<String, Object>.
-      try {
-         return MAPPER.readValue(jsonContent,
-                                 new TypeReference<Map<String, Object>>() {});
-      }
-      catch (Exception e) {
-         throw new RuntimeException("Erro ao converter texto JSON",e);
-      }
-   }
 }
-/*
-CABEÇALHO DO ESQUEMA JSON:
-   "$schema": "https://json-schema.org/draft/2020-12/schema",
-   "$id": "https://example.com/simple-report.schema.json",
-
-
-OPÇÕES DE IMPLEMENTAÇÃO PARA O CÓDIGO ACIMA
-1) org.json (JSON-Java):
-
-JSONObject jsonObject = new JSONObject(jsonString);
-Map<String, Object> schemaMap = jsonObject.toMap();
-
-2) Google Gson:
-
-Gson gson = new Gson();
-Type type = new TypeToken<Map<String, Object>>(){}.getType();
-Map<String, Object> schemaMap = gson.fromJson(jsonReader, type);
-*/

@@ -269,7 +269,7 @@ public class McpClient01SyncStdio {
       if (schema == null || schema.isEmpty())
          return arguments;
       // recupera as propriedades do esquema da ferramenta
-      // ver método register() da classe SimpleReportTool
+      // os nomes e tipos dos argumentos são definidos pelo esquema da ferramenta
       Object propertiesObject = schema.get("properties");
 
       if (!(propertiesObject instanceof Map<?, ?>))
@@ -674,10 +674,8 @@ public class McpClient01SyncStdio {
       // para um tratamento mais aprimorado/avançado de argumentos de linha
       // comando se pode usar PicoCLI (https://picocli.info/)
 
-      // o servidor deve reconhecer o diretório autorizado, um caminho a partir
-      // do qual as operações (tools - ferramentas) com arquivos serão
-      // executadas
-      // o diretório autorizado pode ser passado ao servidor de três formas:
+      // o diretório dos arquivos JSON financeiros pode ser passado ao
+      // servidor de três formas:
       // 1) variável de ambiente do sistema operacional (padrão para qualquer
       //    linguagem de programação receber dados externos):
       //    MCP_FILES_ROOT;
@@ -715,44 +713,4 @@ public class McpClient01SyncStdio {
       finally { clientStdio.close(); }
    }
 
-//   private void listSelectRunToolLooping() {
-//      // os parâmetros para a(s) ferramenta(s) serão lidos da entrada padrão
-//      Scanner         scanner = new Scanner(System.in);
-//      // recupera as ferramentas disponíveis no servidor
-//      ListToolsResult tools   = loadTools();
-//      // executa "in perpetuum"
-//      while (true) {
-//         // mostra as ferramentas (menu) ao usuário
-//         showMenu(scanner);
-//         // exibe o prompt ao usuário
-//         System.out.print("> ");
-//         // se não houver qualquer entrada, encerra o 'looping'
-//         if (!scanner.hasNextLine())
-//            break;
-//         // obtém uma entrada e remove espaços de ambos os lados, se houverem
-//         String command = scanner.nextLine().trim();
-//         // se nada foi digitado, reinicia o 'looping'
-//         if (command.isBlank())
-//            continue;
-//         // se o usuário desejar encerrar
-//         if ("sair".equalsIgnoreCase(command))
-//            break;
-//         // se o usuário desejar a lista de ferramentas disponibilizada pelo
-//         // servidor MCP
-//         if ("listar".equalsIgnoreCase(command)) {
-//            tools = loadTools();
-//            // reinicia o 'looping'
-//            continue;
-//         }
-//         // tenta encontrar a ferramenta desejada
-//         Tool selectedTool = selectTool(tools.tools(),command);
-//         // se a ferramenta não foi encontrada, reinicia o 'looping'
-//         if (selectedTool == null) {
-//            LOG.warn("Ferramenta não encontrada: {}",command);
-//            continue;
-//         }
-//         // ao chegarmos aqui a ferramenta pode ser executada
-//         executeTool(selectedTool,scanner);
-//      }
-//   }
 }

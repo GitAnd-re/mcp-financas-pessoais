@@ -27,7 +27,7 @@ services:
      # servidor/ip e porta em que a aplicação responderá
      ports:
        - "127.0.0.1:6274:6274"
-     # MCP_FILES_ROOT é usada pela ferramente de busca de arquivos
+     # MCP_FILES_ROOT define onde o servidor salva os arquivos JSON financeiros
      environment:
        MCP_FILES_ROOT: ${MCP_FILES_CONTAINER}
        LANG: C.UTF-8
@@ -39,9 +39,7 @@ services:
        - type: bind
          source: ${MCP_FILES_HOST}
          target: ${MCP_FILES_CONTAINER}
-         # REMOVER A LINHA ABAIXO PODE CAUSAR BRECHAS DE SEGURANÇA
-         # FAÇA ISTO COM RESPONSABILIDADE!!!
-#         read_only: true
+         # Escrita habilitada para o servidor persistir os arquivos JSON.
      # executa o servidor MCP em Java
      command:
        - -e

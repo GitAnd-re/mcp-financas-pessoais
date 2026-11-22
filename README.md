@@ -1,59 +1,11 @@
-<!--
-Markdown Cheatsheet
-https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet
--->
+## 🚀 MCP de Finanças Pessoais 🚀
 
-## 🚀 MCP Server: Exemplo 🚀
+Projeto final de Serviços Web: servidor e cliente MCP implementados em Java com Apache Maven. O servidor usa transporte STDIO e oferece ferramentas e recursos para controle de finanças pessoais, além de prompts que orientam análises financeiras.
 
-Este projeto demonstra o uso do Protocolo de Contexto do Modelo ([MCP](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro) - Model Context Protocol) usando o [MCP Java SDK](https://github.com/modelcontextprotocol/java-sdk).
+Os esquemas JSON das ferramentas ficam em `src/main/resources/json-schemas` e são incluídos no JAR do servidor.
 
-Com este SDK deve-ser programar todos os detalhes, tanto do servidor quanto do cliente.
-
-A camada de transporte administra a comunicação entre cliente e servidor, entre outras tarefas, podendo ser STDIO ou *Streamable* HTTP.
-
-Neste caso, é demonstrado o uso de STDIO como modelo de comunicação entre o cliente e o servidor.
-
-O MCP define três primitivas básicas: *tools* (ferramentas), *resources* (recursos) e *prompts*.
-
-Os esquemas JSON, usados pelas ferramentas para indicar a estruturas de dados que serão usadas para torca de informações entre cliente e servidor estão localizados em **src/main/resources/json-schemas** do projeto e no diretório **json-schemas**, localizado dentro do arquivo *.jar*, gerado pelo *build* do servidor. 
-
-Este projeto implementa *tools*, *prompts* e *resources*, a saber:
 ### 🧰 Tools 🧰
-**Diretório Autorizado**: recupera o diretório autorizado passado ao servidor pela variável de ambiente `MCP_FILES_ROOT` ou pela propriedade `-D=mcp.files.root`. Esta ferramenta não possui argumentos.
-
-**Busca de Arquivos**: a partir do diretório autorizado (este argumento é apresentado mais abaixo), a ferramenta fará buscas de acordo com os parâmetros forneceidos na sua execução seguindo o padrão Glob. Mais info [aqui](https://en.wikipedia.org/wiki/Glob_(programming) e [aqui](https://www.digitalocean.com/community/tools/glob?comments=true&glob=%2F%2A%2A%2F%2A.js&matches=false&tests=%2F%2F%20This%20will%20match%20as%20it%20ends%20with%20%27.js%27&tests=%2Fhello%2Fworld.js&tests=%2F%2F%20This%20won%27t%20match%21&tests=%2Ftest%2Fsome%2Fglobs).
-Argumentos:
-* **pattern**: padrão *glob* para valor de busca (obrigatório)
-* **recursive**: pesquisar sub-diretórios? (opcional, false como padrão)
-* **max_results**: total de resultados (1..100) (opcional, 20 como padrão)
-
-**Contar Parágrafos**: recupera a quantidade de parágrafos de um documento do MS Word. Argumentos:
-* **input_file**: caminho para o arquivo MS Word (obrigatório).
-
-**Contar Palavras**: recupera a quantidade de palavras de um documento do MS Word. Argumentos:
-* **input_file**: caminho para o arquivo MS Word (obrigatório).
-
-**Metadados PDF**: recupera os metadados de um arquivo PDF. Argumentos:
-* **input_file**: caminho para o arquivo PDF (obrigatório).
-
-**Buscar & Substituir em PDF**: a partir do diretório autorizado, a ferramenta recupera o arquivo PDF informado pelo usuário e realiza busca de padrões em seu conteúdo, retornando a quantidade de ocorrênicas em cada página do arquivo. Argumentos:
-* **file_input**: caminho para o arquivo PDF de entrada (obrigatório)
-* **file_output**: caminho para o arquivo PDF de saída (opcional),
-* **search**: texto a pesquisar, com ou sem expressões regulares (obrigatório)
-* **replace**: texto a substituir (obrigatório),
-* **use_regex**: se o argumento **search** contiver expressões regulares, este argumento deve ser true, caso contrário, false (opcional, false como padrão),
-* **case_sensitive**: diferencia letras maiúsculas de minúsculas? (opcional, false como padrão).
-
-**Buscar em PDF**: a partir do diretório autorizado, a ferramenta recupera o arquivo PDF informado pelo usuário e realiza busca de padrões em seu conteúdo, retornando a quantidade de ocorrênicas em cada página do arquivo. Argumentos:
-* **input_file**: caminho para o arquivo PDF de entrada (obrigatório)
-* **search**: texto a pesquisar, com ou sem expressões regulares (obrigatório)
-* **use_regex**: se o argumento **targetText** contiver expressões regulares, este argumento deve ser true, caso contrário, false (opcional, false como padrão)
-* **case_sensitive**: diferencia letras maiúsculas de minúsculas? (opcional, false como padrão).
-
-**Simple Report Tool**: ferramenta de exemplo para um relatório simulado. Argumentos:
-* **id**: identificador do relatório (obrigatório).
-
-**Registrar gasto**: registra e salva um gasto no arquivo JSON de lançamentos no diretório autorizado. A resposta confirma os dados do gasto; o identificador continua salvo no arquivo. Argumentos:
+**Registrar gasto**: registra e salva um gasto em `lancamentos.json`. A resposta confirma os dados do gasto; o identificador continua salvo no arquivo. Argumentos:
 * **valor** (`number`, obrigatório): valor positivo do gasto.
 * **categoria** (`string`, obrigatório): categoria do gasto; não pode ser vazia ou conter apenas espaços.
 * **data** (`string`, obrigatório): data válida no formato `DD/MM/AAAA`.
@@ -80,7 +32,7 @@ Erros possíveis:
 * Descrição que não seja texto: `O campo descrição deve ser texto.`
 * Falha ao salvar: `Não foi possível salvar o gasto: <mensagem da falha>.`
 
-**Registrar receita**: registra e salva uma receita no mesmo arquivo JSON de lançamentos no diretório autorizado. A resposta confirma os dados da receita; o identificador continua salvo no arquivo. Argumentos:
+**Registrar receita**: registra e salva uma receita em `lancamentos.json`. A resposta confirma os dados da receita; o identificador continua salvo no arquivo. Argumentos:
 * **valor** (`number`, obrigatório): valor positivo da receita.
 * **fonte** (`string`, obrigatório): origem da receita; não pode ser vazia ou conter apenas espaços.
 * **data** (`string`, obrigatório): data válida no formato `DD/MM/AAAA`.
@@ -160,7 +112,7 @@ Erros possíveis:
 * Ano menor que 1: `O ano deve ser maior que zero.`
 * Falha ao ler os lançamentos: `Não foi possível gerar o resumo financeiro: <mensagem da falha>.`
 
-**Definir orçamento**: salva ou atualiza o limite mensal de gastos de uma categoria no arquivo `orcamentos.json`, no diretório autorizado. Argumentos:
+**Definir orçamento**: salva ou atualiza o limite mensal de gastos de uma categoria em `orcamentos.json`. Argumentos:
 * **categoria** (`string`, obrigatório): categoria a orçar; não pode ser vazia ou conter apenas espaços.
 * **mes** (`integer`, obrigatório): mês ao qual o orçamento se aplica, de 1 a 12.
 * **ano** (`integer`, obrigatório): ano ao qual o orçamento se aplica, maior que zero.
@@ -242,11 +194,6 @@ Erros possíveis:
 * Falha no cálculo: `Não foi possível simular o parcelamento: <mensagem da falha>.`
 
 ### 🪄 Prompts 🪄
-**Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
-* **arquivo**: caminho para o arquivos PDF (obrigatório).
-* **termo**: valor de busca (obrigatório).
-* **contexto**: contexto no qual a análise será realizada (opcional, vazio por padrão).
-
 **Analisar gastos** (`analisar_gastos`): orienta a análise dos gastos de um mês ou ano usando as ferramentas `resumo_financeiro` e `listar_lancamentos`. Argumentos:
 * **ano**: ano a analisar, inteiro maior que zero (obrigatório).
 * **mes**: mês de 1 a 12; se omitido ou vazio, analisa o ano todo (opcional).
@@ -258,13 +205,7 @@ Erros possíveis:
 * **categoria**: categoria usada para filtrar os lançamentos (opcional).
 * **contexto**: pergunta ou foco adicional da análise (opcional).
 
-**Saudação**: fornece um prompt para uma mensagem de saudação/cumprimento ao nome recebido.
-
 ### 📚 Resources 📚
-**Sobre o servidor MCP**: retorna informações sobre o servidor MCP: nome, versão e descrição.
-
-**Informações da raiz de arquivos**: retorna o estado do diretório autorizado: caminho, se é ou não diretório, se está ou não acessível para leitura.
-
 **Categorias de gastos** (`financas://categorias`): lista em ordem alfabética as categorias usadas em gastos ou configuradas em orçamentos, sem duplicatas. Retorna `Nenhuma categoria encontrada.` quando ainda não houver categorias.
 
 **Resumo financeiro do mês atual** (`financas://resumo-mensal-atual`): retorna receitas, gastos, saldo e gastos por categoria do mês corrente. O conteúdo é atualizado quando o resource é lido. Se não houver dados, os totais aparecem como `0.00` e a lista informa `Nenhum gasto no período.`.
@@ -272,7 +213,7 @@ Erros possíveis:
 ---
 
 ### 📌 Executar a aplicação 📌
-Este é um projeto único para duas aplicações: servidor e cliente. O servidor é executado a partir da classe `br.edu.ifpr.mcp_financas_pessoais.main.McpServer01SyncStdio`. Já o cliente é executado a partir da classe `br.edu.ifpr.mcp_financas_pessoais.main.McpClient01SyncStdio`.
+Este projeto entrega duas aplicações: servidor e cliente. O servidor é executado a partir da classe `br.edu.ifpr.mcp_financas_pessoais.main.McpServer01SyncStdio`; o cliente, pela classe `br.edu.ifpr.mcp_financas_pessoais.main.McpClient01SyncStdio`.
 
 Inicialmente, é preciso gerar a aplicação servidor e, em seguida, executar o cliente, tanto no [Eclispe IDE](https://www.eclipse.org/) quanto em linha de comando (CLI - *Command Line Interface*).
 
@@ -339,7 +280,7 @@ java -Dmcp.files.root=DIRETÓRIO_AUTORIZADO  -jar mcp_financas_pessoais_01_clien
 
 Independentemente do modo de execução do processo de construção (*build*), se realizado no Eclipse IDE ou em CLI, uma vez que ambas as aplicações tenham sido criadas, o programador deve abrir uma janela do terminal e mudar para o diretório **dist-client**. Estando neste diretório usar uma das opçãos acima, pressionar a tecla ENTER <img width="20" height="20" src="https://img.icons8.com/color/48/enter-key.png" alt="enter-key"/> e aguardar a execução do cliente que, por sua vez, executará o servidor e apresentará ao usuário um menu para interagir com a(s) ferramenta(s) disponibilizadas pelo servidor.
 
-O argumento **DIRETÓRIO_AUTORIZADO** indica um caminho (diretório/pasta) local a partir do qual o servidor terá acesso para executar algumas de suas ferramentas (*tools*).
+O argumento **DIRETÓRIO_AUTORIZADO** indica a pasta local onde o servidor criará e manterá `lancamentos.json` e `orcamentos.json`.
 
 A segunda e terceira opções são mostradas na sequência para configuração do Claude Desktop.
 
@@ -364,7 +305,7 @@ O arquivo `compose.yaml` foi preparado para a construção de duas imagens:
 1. A imagem contendo o MCP Inspector com o MCP Java Server: adicionar a opção `--build mcp-inspector` na linha de comando
 2. A imagem do MCP Java Server para ser usada com um assistente de IA. Neste caso, quem executará o `compose` é a aplicação de assistente de IA (ver abaixo).
 
-O diretório autorizado, aquele a partir do qual as operações com arquivos serão realizadas, **deve** ser configurado no arquivo `.env`, que se encontra no diretório raiz do projeto.
+O diretório onde o servidor grava `lancamentos.json` e `orcamentos.json` **deve** ser configurado no arquivo `.env`, na raiz do projeto.
 
 ---
 
@@ -440,7 +381,7 @@ Para o primeiro e segundo exemplos, o Java (JDK - *Java Development Kit* ou JRE 
 
 O terceiro exemplo usará o `compose.yaml` do projeto para que o Claude Desktop inicie a execução do `compose`, que, por sua vez, criará uma imagem e a executará (tornando-se um contêiner) no Docker Desktop.
 
-O diretório autorizado, aquele a partir do qual as operações com arquivos serão realizadas, **deve** ser configurado no arquivo `.env`, que se encontra no diretório raiz do projeto.
+O diretório onde o servidor grava `lancamentos.json` e `orcamentos.json` **deve** ser configurado no arquivo `.env`, na raiz do projeto.
 
 ---
 
@@ -465,11 +406,11 @@ Algumas características e dados importantes acerca de testes de software.
 O diretório `src/test/java` é o local onde se localizam as classes para testes, tanto de integração, classes com o sufixo **IT**, quanto unitários, classes com o sufixo **Test**.
 
 #### 📌 Executar Testes Unitários 📌
-As classes de teste possuem os mesmos nomes, com o acréscimo do sufixo `Test`, das classes que implementam as funcionalidades, cujos nomes possuem o sufixo `Service`, e estão localizadas em pacotes, cujos nomes são os mesmos dos pacotes nos quais as classes de código residem.
+Os testes unitários usam o sufixo `Test` e cobrem a lógica dos serviços, ferramentas, resources e prompts.
 
 Seguir os passos acima para criar um *build*, se for a primeira execução. No campo `Goals` digitar `clean test`.
 
-Para executar os testes de integração em linha de comando, digitar `mvn clean test`.
+Para executar os testes unitários em linha de comando, digitar `mvn clean test`.
 
 Para testar apenas uma das várias classes de testes disponíveis, o campo `Goals` deve informar `clean test -Dtest=NomeDaClasse`.
 
@@ -478,7 +419,7 @@ Para testar apenas um método de uma determinada classe, o campo `Goals` deve in
 
 
 #### 📌 Executar Testes de Integração (IT - *Integration Test*) 📌
-As classes de teste possuem os mesmos nomes, com o acréscimo do sufixo `IT`, das classes que implementam as ferramentas, cujos nomes possuem o sufixo `Tool`, e estão localizadas em pacotes, cujos nomes são os mesmos dos pacotes nos quais as classes de código residem.
+Os testes de integração usam o sufixo `IT` e verificam ferramentas, resources e prompts pela comunicação real com o servidor MCP via STDIO.
 
 Seguir os passos acima para criar um *build*, se for a primeira execução. No campo `Goals` digitar `clean verify -Pserver`.
 

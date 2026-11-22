@@ -4,9 +4,7 @@ import java.io.File;
 
 public class AuthPathService {
    /**
-    * Verifica se a propriedade 'mcp.files.root' ou a variável de ambiente
-    * MCP_FILES_ROOT está disponível para ajustar o caminho autorizado para
-    * operações pelo servidor MCP, caso contrário, lança exceção
+    * Obtém o diretório configurado para os arquivos JSON financeiros.
     * @return
     */
    public static String authPath() {
