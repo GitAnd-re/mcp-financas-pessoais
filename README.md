@@ -252,6 +252,12 @@ Erros possíveis:
 * **mes**: mês de 1 a 12; se omitido ou vazio, analisa o ano todo (opcional).
 * **contexto**: pergunta ou foco adicional da análise (opcional).
 
+**Analisar lançamentos** (`analisar_lancamentos`): orienta a análise dos lançamentos individuais de um mês ou ano usando a ferramenta `listar_lancamentos`. Argumentos:
+* **ano**: ano a consultar, inteiro maior que zero (obrigatório).
+* **mes**: mês de 1 a 12; se omitido ou vazio, consulta o ano todo (opcional).
+* **categoria**: categoria usada para filtrar os lançamentos (opcional).
+* **contexto**: pergunta ou foco adicional da análise (opcional).
+
 **Saudação**: fornece um prompt para uma mensagem de saudação/cumprimento ao nome recebido.
 
 ### 📚 Resources 📚

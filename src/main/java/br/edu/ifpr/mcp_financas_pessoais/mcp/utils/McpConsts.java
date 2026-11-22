@@ -92,6 +92,12 @@ public final class McpConsts {
    public static final String ANALYZE_EXPENSES_ATTR_MES = "mes";
    public static final String ANALYZE_EXPENSES_ATTR_ANO = "ano";
    public static final String ANALYZE_EXPENSES_ATTR_CONTEXTO = "contexto";
+   // AnalyzeTransactionsPrompt
+   public static final String ANALYZE_TRANSACTIONS_PROMPT = "analisar_lancamentos";
+   public static final String ANALYZE_TRANSACTIONS_ATTR_MES = "mes";
+   public static final String ANALYZE_TRANSACTIONS_ATTR_ANO = "ano";
+   public static final String ANALYZE_TRANSACTIONS_ATTR_CATEGORIA = "categoria";
+   public static final String ANALYZE_TRANSACTIONS_ATTR_CONTEXTO = "contexto";
 
    // URIs dos recursos ("resources")
    // AboutResource
