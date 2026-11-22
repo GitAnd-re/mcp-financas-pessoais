@@ -348,17 +348,23 @@ public class McpClient01SyncStdio {
 
    private Object convertValue(String value, String name, String type,
                                Map<?, ?> schema) {
-      if ("data".equalsIgnoreCase(name))
-         validateDate(value, schema);
-
       Object converted = switch (type) {
          case "integer" -> parseInteger(value, name, schema);
          case "number" -> parseNumber(value, name);
          case "boolean" -> parseBoolean(value);
-         case "string" -> value;
+         case "string" -> parseString(value, name, schema);
          default -> parseComplexValue(value, type, schema);
       };
       return converted;
+   }
+
+   private String parseString(String value, String name, Map<?, ?> schema) {
+      Object format = schema.get("x-format");
+      if ("date-br".equals(format))
+         validateDate(value, schema);
+      else
+         validatePattern(value, name, schema);
+      return value;
    }
 
    private Integer parseInteger(String value, String name, Map<?, ?> schema) {
@@ -414,6 +420,15 @@ public class McpClient01SyncStdio {
          throw new IllegalArgumentException(
                "Informe uma data válida no formato DD/MM/AAAA.");
       }
+   }
+
+   private void validatePattern(String value, String name, Map<?, ?> schema) {
+      Object patternObject = schema.get("pattern");
+      if (patternObject != null &&
+          !java.util.regex.Pattern.compile(String.valueOf(patternObject))
+                                  .matcher(value).matches())
+         throw new IllegalArgumentException("O parâmetro '" + name +
+               "' não está no formato esperado.");
    }
 
    private Boolean parseBoolean(String value) {
