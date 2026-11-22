@@ -38,15 +38,14 @@ class RegistrarReceitaToolTest {
    }
 
    @Test
-   @DisplayName("Registrar receita e retornar identificador")
+   @DisplayName("Registrar receita sem incluir identificador na resposta")
    void registraReceitaComSucesso() {
       CallToolResult result = executar(argumentos(new BigDecimal("25.90"),
             "Salário", "20/11/2026"));
 
       assertFalse(result.isError());
       String text = texto(result);
-      assertTrue(text.startsWith("id:"));
-      assertTrue(text.contains(", tipo:RECEITA"));
+      assertTrue(text.startsWith("tipo:RECEITA, valor:25.90"));
       assertTrue(text.contains(", valor:25.90"));
       assertTrue(text.contains(", fonte:Salário"));
       assertTrue(text.contains(", data:20/11/2026"));
