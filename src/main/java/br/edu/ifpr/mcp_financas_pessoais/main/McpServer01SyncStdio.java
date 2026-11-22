@@ -10,6 +10,7 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.GreetingPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.CategoriasResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.RootInfoResource;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.ResumoMensalAtualResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.SimpleReportTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.ListarLancamentosTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.DefinirOrcamentoTool;
@@ -99,7 +100,9 @@ public class McpServer01SyncStdio {
                                                       new RootInfoResource(),
                                                       new CategoriasResource(
                                                             lancamentoRepositorio,
-                                                            orcamentoRepositorio)
+                                                            orcamentoRepositorio),
+                                                      new ResumoMensalAtualResource(
+                                                            lancamentoRepositorio)
                                                      );
       // ....para cada recurso, executa seu registro para posterior recuperação
       // de informações

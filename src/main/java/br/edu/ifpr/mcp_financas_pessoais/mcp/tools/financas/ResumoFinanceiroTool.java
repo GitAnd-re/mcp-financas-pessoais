@@ -1,12 +1,12 @@
 package br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 
 import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.McpConsts;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.McpToolDefinition;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.ResumoFinanceiroFormatter;
 import br.edu.ifpr.mcp_financas_pessoais.services.financas.ResumoFinanceiroService;
 import br.edu.ifpr.mcp_financas_pessoais.services.financas.model.ResumoFinanceiro;
 import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.LancamentoRepositorio;
@@ -54,7 +54,7 @@ public class ResumoFinanceiroTool implements McpToolDefinition {
          int ano = readRequiredInteger(args.get(McpConsts.RFT_ATTR_ANO), "ano");
          ResumoFinanceiro resumo = new ResumoFinanceiroService(repositorio)
                .resumir(mes, ano);
-         return createResult(formatarResposta(resumo), false);
+         return createResult(ResumoFinanceiroFormatter.formatar(resumo), false);
       }
       catch (IllegalArgumentException ex) {
          return createResult(ex.getMessage(), true);
@@ -80,34 +80,6 @@ public class ResumoFinanceiroTool implements McpToolDefinition {
          throw new IllegalArgumentException("O campo " + nome +
                " deve ser informado como número inteiro.");
       }
-   }
-
-   private static String formatarResposta(ResumoFinanceiro resumo) {
-      String periodo = resumo.mes() == null
-            ? String.valueOf(resumo.ano())
-            : String.format("%02d/%04d", resumo.mes(), resumo.ano());
-      StringBuilder response = new StringBuilder("Resumo financeiro de ")
-            .append(periodo)
-            .append(":\ntotal_receitas:")
-            .append(formatarValor(resumo.totalReceitas()))
-            .append("\ntotal_gastos:")
-            .append(formatarValor(resumo.totalGastos()))
-            .append("\nsaldo:")
-            .append(formatarValor(resumo.saldo()))
-            .append("\n\ngastos_por_categoria:");
-
-      if (resumo.gastosPorCategoria().isEmpty())
-         response.append("\nNenhum gasto no período.");
-      else
-         resumo.gastosPorCategoria().forEach((categoria, valor) ->
-               response.append("\n").append(categoria).append(":")
-                     .append(formatarValor(valor)));
-
-      return response.toString();
-   }
-
-   private static String formatarValor(BigDecimal valor) {
-      return valor.setScale(2, RoundingMode.HALF_UP).toPlainString();
    }
 
    private static CallToolResult createResult(String message, boolean isError) {

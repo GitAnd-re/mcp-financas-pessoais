@@ -100,4 +100,8 @@ public final class McpConsts {
    // FinanceiroResources
    public static final String RESOURCE_CATEGORIAS_NAME = "categorias";
    public static final String RESOURCE_CATEGORIAS_URI = "financas://categorias";
+   public static final String RESOURCE_RESUMO_MENSAL_ATUAL_NAME =
+         "resumo-mensal-atual";
+   public static final String RESOURCE_RESUMO_MENSAL_ATUAL_URI =
+         "financas://resumo-mensal-atual";
 }

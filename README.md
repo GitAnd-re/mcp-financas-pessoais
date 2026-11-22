@@ -256,6 +256,8 @@ Erros possíveis:
 
 **Categorias de gastos** (`financas://categorias`): lista em ordem alfabética as categorias usadas em gastos ou configuradas em orçamentos, sem duplicatas. Retorna `Nenhuma categoria encontrada.` quando ainda não houver categorias.
 
+**Resumo financeiro do mês atual** (`financas://resumo-mensal-atual`): retorna receitas, gastos, saldo e gastos por categoria do mês corrente. O conteúdo é atualizado quando o resource é lido. Se não houver dados, os totais aparecem como `0.00` e a lista informa `Nenhum gasto no período.`.
+
 ---
 
 ### 📌 Executar a aplicação 📌
