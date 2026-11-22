@@ -33,8 +33,6 @@ public class RegistrarGastoTool implements McpToolDefinition {
    private final LancamentoRepositorio repositorio;
 
    public RegistrarGastoTool(LancamentoRepositorio repositorio) {
-      if (repositorio == null)
-         throw new IllegalArgumentException("O repositório de lançamentos é obrigatório.");
       this.repositorio = repositorio;
    }
 
@@ -56,84 +54,16 @@ public class RegistrarGastoTool implements McpToolDefinition {
    @Override
    public CallToolResult run(McpSyncServerExchange exchange,
                              CallToolRequest request) {
-      String msg = "";
       try {
          Map<String, Object> args = request.arguments();
+         BigDecimal valor = readValor(args.get(McpConsts.RGT_ATTR_VALOR));
+         String categoria = readTextoObrigatorio(
+               args.get(McpConsts.RGT_ATTR_CATEGORIA), "categoria");
+         LocalDate data = readData(args.get(McpConsts.RGT_ATTR_DATA));
+         String descricao = readDescricao(args.get(McpConsts.RGT_ATTR_DESCRICAO));
 
-         Object valorArgumento = args.get(McpConsts.RGT_ATTR_VALOR);
-         BigDecimal valor = null;
-         if (!(valorArgumento instanceof Number)) {
-            msg = "O valor deve ser informado como número.";
-         }
-         else {
-            try {
-               valor = new BigDecimal(valorArgumento.toString());
-            }
-            catch (NumberFormatException ex) {
-               msg = "O valor informado é inválido.";
-            }
-         }
-
-         Object categoriaArgumento = args.get(McpConsts.RGT_ATTR_CATEGORIA);
-         String categoria = null;
-         if (!(categoriaArgumento instanceof String)) {
-            if (categoriaArgumento == null && msg.isEmpty())
-               msg = "O campo categoria é obrigatório.";
-            else if (msg.isEmpty())
-               msg = "O campo categoria deve ser texto.";
-         }
-         else {
-            categoria = (String) categoriaArgumento;
-            if (categoria.isBlank() && msg.isEmpty())
-               msg = "O campo categoria não pode ser vazio.";
-         }
-
-         Object dataArgumento = args.get(McpConsts.RGT_ATTR_DATA);
-         String dataTexto = null;
-         if (!(dataArgumento instanceof String)) {
-            if (dataArgumento == null && msg.isEmpty())
-               msg = "O campo data é obrigatório.";
-            else if (msg.isEmpty())
-               msg = "O campo data deve ser texto.";
-         }
-         else {
-            dataTexto = (String) dataArgumento;
-            if (dataTexto.isBlank() && msg.isEmpty())
-               msg = "O campo data não pode ser vazio.";
-         }
-
-         LocalDate data = null;
-         if (dataTexto != null && !dataTexto.isBlank() && msg.isEmpty()) {
-            try {
-               data = LocalDate.parse(dataTexto, DATE_FORMATTER);
-            }
-            catch (DateTimeParseException ex) {
-               msg = "A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.";
-               return createResult(msg, true);
-            }
-         }
-
-         Object descricaoArgumento = args.get(McpConsts.RGT_ATTR_DESCRICAO);
-         String descricao = "";
-         if (descricaoArgumento == null) {
-            descricao = "";
-         }
-         else if (descricaoArgumento instanceof String) {
-            descricao = (String) descricaoArgumento;
-         }
-         else if (msg.isEmpty()) {
-            msg = "O campo descrição deve ser texto.";
-         }
-
-         if (valor != null && valor.signum() <= 0 && msg.isEmpty())
-            msg = "O valor deve ser maior que zero.";
-
-         if (!msg.isEmpty()) {
-            return createResult(msg, true);
-         }
-
-         RegistrarGastoService service = new RegistrarGastoService(repositorio);
-         Lancamento lancamento = service.registrar(valor, categoria, data, descricao);
+         Lancamento lancamento = new RegistrarGastoService(repositorio)
+               .registrar(valor, categoria, data, descricao);
 
          StringBuilder response = new StringBuilder();
          response.append("id:").append(lancamento.id())
@@ -144,9 +74,52 @@ public class RegistrarGastoTool implements McpToolDefinition {
                  .append(", descricao:").append(lancamento.descricao());
          return createResult(response.toString(), false);
       }
+      catch (IllegalArgumentException ex) {
+         return createResult(ex.getMessage(), true);
+      }
       catch (Exception ex) {
          return createResult("Não foi possível salvar o gasto: " + ex.getMessage(), true);
       }
+   }
+
+   private static BigDecimal readValor(Object value) {
+      if (!(value instanceof Number))
+         throw new IllegalArgumentException("O valor deve ser informado como número.");
+      try {
+         return new BigDecimal(value.toString());
+      }
+      catch (NumberFormatException ex) {
+         throw new IllegalArgumentException("O valor informado é inválido.");
+      }
+   }
+
+   private static String readTextoObrigatorio(Object value, String nome) {
+      if (value == null)
+         throw new IllegalArgumentException("O campo " + nome + " é obrigatório.");
+      if (!(value instanceof String))
+         throw new IllegalArgumentException("O campo " + nome + " deve ser texto.");
+      return (String) value;
+   }
+
+   private static LocalDate readData(Object value) {
+      String texto = readTextoObrigatorio(value, "data");
+      if (texto.isBlank())
+         throw new IllegalArgumentException("O campo data não pode ser vazio.");
+      try {
+         return LocalDate.parse(texto, DATE_FORMATTER);
+      }
+      catch (DateTimeParseException ex) {
+         throw new IllegalArgumentException(
+               "A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.");
+      }
+   }
+
+   private static String readDescricao(Object value) {
+      if (value == null)
+         return "";
+      if (!(value instanceof String))
+         throw new IllegalArgumentException("O campo descrição deve ser texto.");
+      return (String) value;
    }
 
    private static CallToolResult createResult(String message, boolean isError) {

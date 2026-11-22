@@ -68,6 +68,16 @@ class RegistrarGastoToolTest {
       assertTrue(response.contains(", descricao:linha 1\nlinha 2\\fim"));
    }
 
+   @Test
+   @DisplayName("Retorna diretamente validação de negócio do service")
+   void retornaValidacaoDoServiceSemPrefixoDePersistencia() {
+      CallToolResult result = executar(argumentos(BigDecimal.ZERO,
+            "Mercado", "20/11/2026", null));
+
+      assertTrue(result.isError());
+      assertEquals("O valor deve ser maior que zero.", texto(result));
+   }
+
    @ParameterizedTest(name = "Rejeita valor inválido: {0}")
    @MethodSource("valoresInvalidos")
    void rejeitaValorInvalido(Object valor) {
