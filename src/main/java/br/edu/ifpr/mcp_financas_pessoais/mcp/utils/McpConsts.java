@@ -87,6 +87,11 @@ public final class McpConsts {
    // GreetingPrompt
    public static final String GREETING_PROMPT    = "saudacao";
    public static final String GREETING_ATTR_NOME = "nome";
+   // AnalyzeExpensesPrompt
+   public static final String ANALYZE_EXPENSES_PROMPT = "analisar_gastos";
+   public static final String ANALYZE_EXPENSES_ATTR_MES = "mes";
+   public static final String ANALYZE_EXPENSES_ATTR_ANO = "ano";
+   public static final String ANALYZE_EXPENSES_ATTR_CONTEXTO = "contexto";
 
    // URIs dos recursos ("resources")
    // AboutResource

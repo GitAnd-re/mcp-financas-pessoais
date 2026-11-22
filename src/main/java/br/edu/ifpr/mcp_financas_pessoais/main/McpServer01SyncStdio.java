@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.AnalyzePdfPrompt;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.AnalyzeExpensesPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.GreetingPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.CategoriasResource;
@@ -115,6 +116,7 @@ public class McpServer01SyncStdio {
                 throws Exception {
       // cria a lista de prompts disponíveis no servidor....
       List<McpPromptDefinition> prompts = List.of(new GreetingPrompt(),
+                                                  new AnalyzeExpensesPrompt(),
                                                   new AnalyzePdfPrompt());
       // ....para cada prompt, executa seu registro para posterior recuperação
       // de informações

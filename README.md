@@ -247,6 +247,11 @@ Erros possíveis:
 * **termo**: valor de busca (obrigatório).
 * **contexto**: contexto no qual a análise será realizada (opcional, vazio por padrão).
 
+**Analisar gastos** (`analisar_gastos`): orienta a análise dos gastos de um mês ou ano usando as ferramentas `resumo_financeiro` e `listar_lancamentos`. Argumentos:
+* **ano**: ano a analisar, inteiro maior que zero (obrigatório).
+* **mes**: mês de 1 a 12; se omitido ou vazio, analisa o ano todo (opcional).
+* **contexto**: pergunta ou foco adicional da análise (opcional).
+
 **Saudação**: fornece um prompt para uma mensagem de saudação/cumprimento ao nome recebido.
 
 ### 📚 Resources 📚
