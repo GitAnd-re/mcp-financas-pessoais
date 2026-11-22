@@ -38,15 +38,14 @@ class RegistrarGastoToolTest {
    }
 
    @Test
-   @DisplayName("Registra gasto e retorna o identificador")
+   @DisplayName("Registra gasto sem incluir identificador na resposta")
    void registraGastoComSucesso() {
       CallToolResult result = executar(argumentos(new BigDecimal("25.90"),
             "Alimentação", "20/11/2026", "Almoço"));
 
       assertFalse(result.isError());
       String text = texto(result);
-      assertTrue(text.startsWith("id:"));
-      assertTrue(text.contains(", tipo:GASTO"));
+      assertTrue(text.startsWith("tipo:GASTO, valor:25.90"));
       assertTrue(text.contains(", valor:25.90"));
       assertTrue(text.contains(", categoria:Alimentação"));
       assertTrue(text.contains(", data:20/11/2026"));

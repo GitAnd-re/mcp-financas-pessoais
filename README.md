@@ -53,7 +53,7 @@ Argumentos:
 **Simple Report Tool**: ferramenta de exemplo para um relatório simulado. Argumentos:
 * **id**: identificador do relatório (obrigatório).
 
-**Registrar gasto**: registra e salva um gasto no arquivo JSON de lançamentos no diretório autorizado. Retorna o registro criado, incluindo o identificador. Argumentos:
+**Registrar gasto**: registra e salva um gasto no arquivo JSON de lançamentos no diretório autorizado. A resposta confirma os dados do gasto; o identificador continua salvo no arquivo. Argumentos:
 * **valor** (`number`, obrigatório): valor positivo do gasto.
 * **categoria** (`string`, obrigatório): categoria do gasto; não pode ser vazia ou conter apenas espaços.
 * **data** (`string`, obrigatório): data válida no formato `DD/MM/AAAA`.
@@ -62,7 +62,7 @@ Argumentos:
 Resposta de sucesso (texto):
 
 ```text
-id:c142a431-4c76-4efa-81a6-e34f6a15f17d, tipo:GASTO, valor:42.75, categoria:Transporte, data:20/11/2026, descricao:Ônibus
+tipo:GASTO, valor:42.75, categoria:Transporte, data:20/11/2026, descricao:Ônibus
 ```
 
 Erros possíveis:
