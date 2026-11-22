@@ -119,7 +119,13 @@ public class AnalyzeTransactionsPrompt implements McpPromptDefinition {
    }
 
    private static int readPositiveInteger(Object value, String nome) {
-      if (!(value instanceof String texto) || texto.isBlank())
+      if (value == null)
+         throw new IllegalArgumentException(
+               "O argumento '" + nome + "' é obrigatório.");
+      if (!(value instanceof String texto))
+         throw new IllegalArgumentException(
+               "O argumento '" + nome + "' deve ser um número inteiro.");
+      if (texto.isBlank())
          throw new IllegalArgumentException(
                "O argumento '" + nome + "' é obrigatório.");
       try {
