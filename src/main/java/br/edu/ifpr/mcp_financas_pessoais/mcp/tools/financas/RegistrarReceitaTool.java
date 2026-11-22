@@ -65,7 +65,8 @@ public class RegistrarReceitaTool implements McpToolDefinition {
                .registrar(valor, fonte, data);
 
          StringBuilder response = new StringBuilder();
-         response.append("tipo:").append(lancamento.tipo().name())
+         response.append("id:").append(lancamento.id())
+                 .append(", tipo:").append(lancamento.tipo().name())
                  .append(", valor:").append(lancamento.valor().toPlainString())
                  .append(", fonte:").append(lancamento.fonte())
                  .append(", data:").append(lancamento.data().format(DATE_FORMATTER));

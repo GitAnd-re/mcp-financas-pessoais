@@ -80,7 +80,7 @@ Erros possíveis:
 * Descrição que não seja texto: `O campo descrição deve ser texto.`
 * Falha ao salvar: `Não foi possível salvar o gasto: <mensagem da falha>.`
 
-**Registrar receita**: registra e salva uma receita no mesmo arquivo JSON de lançamentos no diretório autorizado. A resposta confirma os dados da receita; o identificador continua salvo no arquivo. Argumentos:
+**Registrar receita**: registra e salva uma receita no mesmo arquivo JSON de lançamentos no diretório autorizado. Argumentos:
 * **valor** (`number`, obrigatório): valor positivo da receita.
 * **fonte** (`string`, obrigatório): origem da receita; não pode ser vazia ou conter apenas espaços.
 * **data** (`string`, obrigatório): data válida no formato `DD/MM/AAAA`.
@@ -88,7 +88,7 @@ Erros possíveis:
 Resposta de sucesso (texto):
 
 ```text
-tipo:RECEITA, valor:2500.00, fonte:Salário, data:20/11/2026
+id:3f7d1f6c-2f95-4f08-a070-df5b953f5231, tipo:RECEITA, valor:2500.00, fonte:Salário, data:20/11/2026
 ```
 
 Erros possíveis:

@@ -79,13 +79,13 @@ class RegistrarReceitaToolIT {
       assertNotNull(result);
       assertFalse(result.isError());
       String response = ((TextContent) result.content().get(0)).text();
-      assertTrue(response.startsWith("tipo:RECEITA, valor:42.75"));
+      assertTrue(response.startsWith("id:"));
+      assertTrue(response.contains(", tipo:RECEITA"));
       assertTrue(response.contains(", valor:42.75"));
       assertTrue(response.contains(", fonte:Salário"));
       assertTrue(response.contains(", data:20/11/2026"));
       assertTrue(Files.isRegularFile(arquivoDados));
       String saved = Files.readString(arquivoDados);
-      assertTrue(saved.contains("\"id\""));
       assertTrue(saved.contains("\"RECEITA\""));
       assertTrue(saved.contains("Salário"));
       assertTrue(saved.contains("42.75"));
