@@ -10,6 +10,7 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.GreetingPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.RootInfoResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.SimpleReportTool;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.ListarLancamentosTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarGastoTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarReceitaTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.AuthPathTool;
@@ -61,6 +62,7 @@ public class McpServer01SyncStdio {
       List<McpToolDefinition> tools = List.of(new SimpleReportTool(),
                                               new RegistrarGastoTool(lancamentoRepositorio),
                                               new RegistrarReceitaTool(lancamentoRepositorio),
+                                              new ListarLancamentosTool(lancamentoRepositorio),
                                               new AuthPathTool(),
                                               new FileSearchTool(fss),
                                               new PdfSearchAndReplaceTool(),

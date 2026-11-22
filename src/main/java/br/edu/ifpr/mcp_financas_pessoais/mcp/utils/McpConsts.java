@@ -53,6 +53,11 @@ public final class McpConsts {
    public static final String RRT_ATTR_VALOR = "valor";
    public static final String RRT_ATTR_FONTE = "fonte";
    public static final String RRT_ATTR_DATA  = "data";
+   // ListarLancamentosTool
+   public static final String LLT_TOOL_NAME        = "listar_lancamentos";
+   public static final String LLT_ATTR_MES         = "mes";
+   public static final String LLT_ATTR_ANO         = "ano";
+   public static final String LLT_ATTR_CATEGORIA   = "categoria";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

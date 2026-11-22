@@ -1,0 +1,27 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "classpath:/json-schemas/listar-lancamentos.schema.json",
+   "title": "Listar lançamentos",
+   "description": "Lista lançamentos pelo mês, ano e categoria opcional",
+   "type": "object",
+   "properties": {
+      "mes": {
+         "type": "integer",
+         "minimum": 1,
+         "maximum": 12,
+         "description": "Mês dos lançamentos, de 1 a 12; quando omitido, lista o ano inteiro"
+      },
+      "ano": {
+         "type": "integer",
+         "minimum": 1,
+         "description": "Ano dos lançamentos"
+      },
+      "categoria": {
+         "type": "string",
+         "minLength": 1,
+         "description": "Categoria opcional para filtrar gastos"
+      }
+   },
+   "required": ["ano"],
+   "additionalProperties": false
+}

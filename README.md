@@ -105,6 +105,33 @@ Erros possíveis:
 * Data inválida ou fora do formato `DD/MM/AAAA`: `A data informada é inválida. Use uma data válida no formato DD/MM/AAAA.`
 * Falha ao salvar: `Não foi possível salvar a receita: <mensagem da falha>.`
 
+**Listar lançamentos**: lista os lançamentos de um mês específico ou de um ano inteiro, opcionalmente filtrando pela categoria. Argumentos:
+* **mes** (`integer`, opcional): mês dos lançamentos, de 1 a 12. Se omitido, lista todos os meses do ano informado.
+* **ano** (`integer`, obrigatório): ano dos lançamentos, maior que zero.
+* **categoria** (`string`, opcional): mostra somente os gastos da categoria informada. Sem este parâmetro, lista gastos e receitas.
+
+Resposta de sucesso (texto):
+
+```text
+Lançamentos de 2040:
+id:..., tipo:GASTO, valor:30.00, categoria:Curso, fonte:null, data:20/04/2040, descricao:
+```
+
+Quando não houver resultados, a mensagem indica o período consultado, por exemplo: `Nenhum lançamento encontrado para 04/2040.` ou `Nenhum lançamento encontrado para 2040.`
+
+Erros possíveis:
+
+* Mês informado que não seja inteiro: `O campo mês deve ser inteiro.`
+* Mês menor que 1 (na coleta pelo cliente): `Valor inválido: O parâmetro 'mes' deve ser maior ou igual a 1.`
+* Mês maior que 12 (na coleta pelo cliente): `Valor inválido: O parâmetro 'mes' deve ser menor ou igual a 12.`
+* Ano ausente: `O campo ano é obrigatório.`
+* Ano que não seja inteiro: `O campo ano deve ser inteiro.`
+* Ano menor que 1: `O ano deve ser maior que zero.`
+* Categoria que não seja texto: `O campo categoria deve ser texto.`
+* Categoria vazia: `O campo categoria não pode ser vazio.`
+* Categoria composta só por espaços: `A categoria não pode ser vazia.`
+* Falha ao ler os lançamentos: `Não foi possível listar os lançamentos: <mensagem da falha>.`
+
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
 * **arquivo**: caminho para o arquivos PDF (obrigatório).

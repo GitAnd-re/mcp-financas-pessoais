@@ -351,13 +351,34 @@ public class McpClient01SyncStdio {
       if ("data".equalsIgnoreCase(name))
          validateDate(value, schema);
 
-      return switch (type) {
-         case "integer" -> Integer.valueOf(value);
+      Object converted = switch (type) {
+         case "integer" -> {
+            Integer integer = Integer.valueOf(value);
+            validateIntegerConstraints(integer, name, schema);
+            yield integer;
+         }
          case "number" -> new BigDecimal(value);
          case "boolean" -> parseBoolean(value);
          case "string" -> value;
          default -> parseComplexValue(value, type, schema);
       };
+      return converted;
+   }
+
+   static void validateIntegerConstraints(Integer value, String name,
+                                          Map<?, ?> schema) {
+      BigDecimal number = BigDecimal.valueOf(value);
+      Object minimum = schema.get("minimum");
+      if (minimum instanceof Number limit &&
+          number.compareTo(new BigDecimal(limit.toString())) < 0)
+         throw new IllegalArgumentException(
+               "O parâmetro '" + name + "' deve ser maior ou igual a " + limit + ".");
+
+      Object maximum = schema.get("maximum");
+      if (maximum instanceof Number limit &&
+          number.compareTo(new BigDecimal(limit.toString())) > 0)
+         throw new IllegalArgumentException(
+               "O parâmetro '" + name + "' deve ser menor ou igual a " + limit + ".");
    }
 
    private void validateDate(String value, Map<?, ?> schema) {
