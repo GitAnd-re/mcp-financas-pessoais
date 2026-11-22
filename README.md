@@ -280,7 +280,7 @@ java -Dmcp.files.root=DIRETÓRIO_AUTORIZADO  -jar mcp_financas_pessoais_01_clien
 
 Independentemente do modo de execução do processo de construção (*build*), se realizado no Eclipse IDE ou em CLI, uma vez que ambas as aplicações tenham sido criadas, o programador deve abrir uma janela do terminal e mudar para o diretório **dist-client**. Estando neste diretório usar uma das opçãos acima, pressionar a tecla ENTER <img width="20" height="20" src="https://img.icons8.com/color/48/enter-key.png" alt="enter-key"/> e aguardar a execução do cliente que, por sua vez, executará o servidor e apresentará ao usuário um menu para interagir com a(s) ferramenta(s) disponibilizadas pelo servidor.
 
-O argumento **DIRETÓRIO_AUTORIZADO** indica a pasta local onde o servidor criará e manterá `lancamentos.json` e `orcamentos.json`.
+O argumento **DIRETÓRIO_AUTORIZADO** indica a pasta local onde o servidor criará e manterá `lancamentos.json` e `orcamentos.json`. Se o argumento, a variável `MCP_FILES_ROOT` e a propriedade `mcp.files.root` não forem informados, os arquivos serão salvos em `.mcp-financas-pessoais` dentro do diretório pessoal do usuário.
 
 A segunda e terceira opções são mostradas na sequência para configuração do Claude Desktop.
 
