@@ -40,6 +40,7 @@ import io.modelcontextprotocol.spec.McpSchema.Tool;
 import tools.jackson.databind.json.JsonMapper;
 
 public class McpClient01SyncStdio {
+   private static final Object END_OF_INPUT = new Object();
    private static final DateTimeFormatter DATE_BR_FORMATTER =
          DateTimeFormatter.ofPattern("dd/MM/uuuu")
                           .withResolverStyle(ResolverStyle.STRICT);
@@ -164,7 +165,7 @@ public class McpClient01SyncStdio {
          System.out.print("\nOpção: ");
 
          if (!scanner.hasNextLine())
-             continue;
+             return;
 
          String option = scanner.nextLine().trim().toLowerCase();
          if (option.isBlank())
@@ -202,7 +203,7 @@ public class McpClient01SyncStdio {
          System.out.print("Selecione uma ferramenta: ");
 
          if (!scanner.hasNextLine())
-             continue;
+             return;
 
          String command = scanner.nextLine().trim();
 
@@ -246,6 +247,9 @@ public class McpClient01SyncStdio {
          System.out.println("Descrição: " + tool.description());
 
       Map<String, Object> arguments = readArguments(tool,scanner);
+      if (arguments == null)
+         return;
+
       CallToolRequest     request   = CallToolRequest.builder(tool.name())
     			                                     .arguments(arguments)
     			                                     .build();
@@ -296,6 +300,9 @@ public class McpClient01SyncStdio {
          Object    value       = readArgument(scanner,name,type,description,
         			                               isRequired,property);
 
+         if (value == END_OF_INPUT)
+            return null;
+
          if (value != null)
             arguments.put(name,value);
       }
@@ -330,7 +337,7 @@ public class McpClient01SyncStdio {
          System.out.print("Valor: ");
 
          if (!scanner.hasNextLine())
-            return null;
+            return END_OF_INPUT;
 
          String value = scanner.nextLine().trim();
          if (value.isBlank()) {
@@ -517,7 +524,7 @@ public class McpClient01SyncStdio {
          System.out.println("\n0 - Voltar");
          System.out.print("Selecione um recurso: ");
          if (!scanner.hasNextLine())
-             continue;
+             return;
 
          String option = scanner.nextLine().trim();
          if (option.isBlank())
@@ -611,6 +618,8 @@ public class McpClient01SyncStdio {
          System.out.println("Descrição: " + prompt.description());
 
       Map<String,Object> arguments = readPromptArguments(prompt,scanner);
+      if (arguments == null)
+         return;
 
       GetPromptRequest request = GetPromptRequest.builder(prompt.name())
                                                  .arguments(arguments)
@@ -649,7 +658,7 @@ public class McpClient01SyncStdio {
 
             System.out.print("Valor: ");
             if (!scanner.hasNextLine())
-               return arguments;
+               return null;
 
             String value = scanner.nextLine().trim();
              if (value.isBlank()) {

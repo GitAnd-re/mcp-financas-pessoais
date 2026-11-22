@@ -215,11 +215,11 @@ Erros possíveis:
 ### 📌 Executar a aplicação 📌
 Este projeto entrega duas aplicações: servidor e cliente. O servidor é executado a partir da classe `br.edu.ifpr.mcp_financas_pessoais.main.McpServer01SyncStdio`; o cliente, pela classe `br.edu.ifpr.mcp_financas_pessoais.main.McpClient01SyncStdio`.
 
-Inicialmente, é preciso gerar a aplicação servidor e, em seguida, executar o cliente, tanto no [Eclispe IDE](https://www.eclipse.org/) quanto em linha de comando (CLI - *Command Line Interface*).
+Inicialmente, é preciso gerar a aplicação servidor e, em seguida, executar o cliente, tanto no [Eclipse IDE](https://www.eclipse.org/) quanto em linha de comando (CLI - *Command Line Interface*).
 
 Além disto, é possível executar o servidor MCP Java em assistentes de IA locais, tais como [Claude Desktop](https://claude.com/product/overview), [Gemini CLI](https://geminicli.com/) e [Cursor CLI](https://cursor.com/cli).
 
-Também é possível verificar e testar o servidor MCP Java com o [MCP Inspector](https://cursor.com/cli). A [Anthropic](https://cursor.com/cli) criou esta ferramenta para testar e depurar servidores MCP locais e remotos. Ela possui interface web, CLI e TUI (*Text User Interface*). Mais adiante, este documento mostra os passos necessários para testar o servidor MCP Java com o MCP Inspector rodando como um contêiner Docker no Docker Desktop, juntamente com os arquivos `Dockerfile` e `compose.yaml`, disponíveis na raiz do projeto.
+Também é possível verificar e testar o servidor MCP Java com o [MCP Inspector](https://github.com/modelcontextprotocol/inspector), ferramenta interativa para testar e depurar servidores MCP. Mais adiante, este documento mostra os passos necessários para executar o MCP Inspector em um contêiner Docker no Docker Desktop, juntamente com os arquivos `Dockerfile` e `compose.yaml`, disponíveis na raiz do projeto.
 
 #### ⚙️ Eclipse IDE ⚙️
 1. Clicar com o botão direito do mouse no nome do projeto;
@@ -237,7 +237,7 @@ Se o processo de construção da aplicação servidor ocorreu sem erros, ele pro
 
 Para gerar a aplicação cliente, deve-se executar os quatro passos mostrados anteriormente, com a seguinte diferença, na aba **Main** digitar **clean package -Pclient -DskipTests**, e este procedimento, assim como o anterior, deve ser realizado apenas na primeira vez.
 
-Se o processo de construção da aplicação cliente ocorreu sem erros, ele produzirá o diretório **dist-client** como sub-diretório de **target**. O diretório **dist_client** contém a aplicação cliente e o sub-diretório **libs** com as bibliotecas necessária à sua execução.
+Se o processo de construção da aplicação cliente ocorreu sem erros, ele produzirá o diretório **dist-client** como subdiretório de **target**. O diretório **dist-client** contém a aplicação cliente e o subdiretório **libs**, com as bibliotecas necessárias à sua execução.
 
 #### ⚙️ Linha de Comando (CLI) ⚙️
 Abrir uma janela do terminal, Prompt de Comando ou PowerShell no Windows, por exemplo, mudar para o diretório raiz do projeto e gerar as aplicações:
@@ -252,9 +252,7 @@ mvn clean package -Pclient -DskipTests
 
 # executar o cliente MCP Java, que executará o servidor MCP Java
 # DIRETÓRIO_AUTORIZADO é passado como parâmetro ao cliente, que
-# repassará ao servidora
-a
-
+# repassará ao servidor
 java -jar mcp_financas_pessoais_client.jar DIRETÓRIO_AUTORIZADO
 ```
 
@@ -263,7 +261,7 @@ ou
 ```
 # executar o cliente MCP Java, que executará o servidor MCP Java
 # DIRETÓRIO_AUTORIZADO é disponibilizado por meio da variável
-# de ambiente MCP_FILES_ROOT e será repassado ao servidora
+# de ambiente MCP_FILES_ROOT e será repassado ao servidor
 set MCP_FILES_ROOT=DIRETÓRIO_AUTORIZADO
 java -jar mcp_financas_pessoais_client.jar
 set MCP_FILES_ROOT=
@@ -272,13 +270,13 @@ set MCP_FILES_ROOT=
 ou
 
 ```
-# executar o cliente MCP Java, que executará o servidor MCP Javaa
+# executar o cliente MCP Java, que executará o servidor MCP Java
 # DIRETÓRIO_AUTORIZADO é disponibilizado por meio de um parâmetro
 # à JVM (propriedade) e será repassado ao servidor
 java -Dmcp.files.root=DIRETÓRIO_AUTORIZADO  -jar mcp_financas_pessoais_client.jar
 ```
 
-Independentemente do modo de execução do processo de construção (*build*), se realizado no Eclipse IDE ou em CLI, uma vez que ambas as aplicações tenham sido criadas, o programador deve abrir uma janela do terminal e mudar para o diretório **dist-client**. Estando neste diretório usar uma das opçãos acima, pressionar a tecla ENTER <img width="20" height="20" src="https://img.icons8.com/color/48/enter-key.png" alt="enter-key"/> e aguardar a execução do cliente que, por sua vez, executará o servidor e apresentará ao usuário um menu para interagir com a(s) ferramenta(s) disponibilizadas pelo servidor.
+Independentemente do modo de construção (*build*), pelo Eclipse IDE ou pela linha de comando, depois de gerar as duas aplicações, abra um terminal e entre no diretório **target/dist-client**. Execute um dos comandos acima e pressione ENTER <img width="20" height="20" src="https://img.icons8.com/color/48/enter-key.png" alt="enter-key"/>. O cliente iniciará o servidor e exibirá um menu para interagir com as ferramentas disponíveis.
 
 O argumento **DIRETÓRIO_AUTORIZADO** indica a pasta local onde o servidor criará e manterá `lancamentos.json` e `orcamentos.json`. Se o argumento, a variável `MCP_FILES_ROOT` e a propriedade `mcp.files.root` não forem informados, os arquivos serão salvos em `.mcp-financas-pessoais` dentro do diretório pessoal do usuário.
 
@@ -369,15 +367,15 @@ Na interface atual do Claude Desktop, as ferramentas ficam disponíveis no servi
 
 O diretório `Users` também pode ser escrito como `Usuários`.
 
-`USUÁRIO_LOGADO` o nome do diretório é o mesmo nome usado para *login* no Windows.
+`USUÁRIO_LOGADO` representa o nome do diretório do perfil da conta usada para entrar no Windows.
  
 O diretório `Claude_pzs8sxrjxfjjc` pode possuir um nome diferente do apresentado, mas o prefixo `Claude_` será o mesmo.
 
 `DRIVE:` é a indicação do *drive* no sistema de arquivos do Windows.
 
-`\\` caractere que separa nomes de caminhos no Windows (`/` para Linux, Unix e macOS).
+No Windows, o separador de diretórios é a barra invertida (`\`); em Linux, Unix e macOS, geralmente é a barra (`/`).
 
-O primeiro exemplo é genérico o suficiente e pode ser usado com servidores MCP implementados com qualquer tecnologia de desenvolvimento de software, desde que sejam capazes de ler o ambiente (variáveis de ambiente) em que são executadas..
+O primeiro exemplo é genérico e pode ser usado com servidores MCP de diferentes tecnologias, desde que consigam ler variáveis de ambiente.
 
 O segundo exemplo é específico para a linguagem Java, pois usa parâmetros que são passados à Máquina Virtual Java (JVM - *Java Virtual Machine*) através de propriedades.
 
