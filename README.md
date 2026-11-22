@@ -66,7 +66,7 @@ Resposta de sucesso (texto):
 
 ```text
 Lançamentos de 2040:
-tipo:GASTO, valor:30.00, categoria:Curso, fonte:null, data:20/04/2040, descricao:
+tipo:GASTO, valor:30.00, categoria:Curso, data:20/04/2040, descricao:
 ```
 
 Quando não houver resultados, a mensagem indica o período consultado, por exemplo: `Nenhum lançamento encontrado para 04/2040.` ou `Nenhum lançamento encontrado para 2040.`

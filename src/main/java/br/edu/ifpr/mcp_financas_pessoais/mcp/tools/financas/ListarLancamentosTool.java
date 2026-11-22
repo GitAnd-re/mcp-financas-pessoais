@@ -103,11 +103,15 @@ public class ListarLancamentosTool implements McpToolDefinition {
    }
 
    private static String formatarLancamento(Lancamento lancamento) {
-      return new StringBuilder("tipo:").append(lancamento.tipo().name())
-            .append(", valor:").append(lancamento.valor().toPlainString())
-            .append(", categoria:").append(lancamento.categoria())
-            .append(", fonte:").append(lancamento.fonte())
-            .append(", data:").append(lancamento.data().format(DATE_FORMATTER))
+      StringBuilder response = new StringBuilder("tipo:")
+            .append(lancamento.tipo().name())
+            .append(", valor:").append(lancamento.valor().toPlainString());
+      if (lancamento.tipo() == Lancamento.TipoLancamento.GASTO)
+         response.append(", categoria:").append(lancamento.categoria());
+      else
+         response.append(", fonte:").append(lancamento.fonte());
+      return response.append(", data:")
+            .append(lancamento.data().format(DATE_FORMATTER))
             .append(", descricao:").append(lancamento.descricao())
             .toString();
    }

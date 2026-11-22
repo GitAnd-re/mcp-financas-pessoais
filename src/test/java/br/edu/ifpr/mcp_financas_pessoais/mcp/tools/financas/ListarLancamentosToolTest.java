@@ -44,11 +44,12 @@ class ListarLancamentosToolTest {
       assertFalse(result.isError());
       String text = texto(result);
       assertTrue(text.startsWith("Lançamentos de 11/2026:"));
-      assertTrue(text.contains("tipo:GASTO, valor:10.00"));
-      assertTrue(text.contains("categoria:Mercado, fonte:null"));
-      assertTrue(text.contains("tipo:RECEITA, valor:20.50"));
-      assertTrue(text.contains("categoria:null, fonte:Salário"));
-      assertTrue(text.contains("data:21/11/2026"));
+      assertTrue(text.contains("tipo:GASTO, valor:10.00, categoria:Mercado, " +
+            "data:20/11/2026, descricao:descrição"));
+      assertTrue(text.contains("tipo:RECEITA, valor:20.50, fonte:Salário, " +
+            "data:21/11/2026, descricao:descrição"));
+      assertFalse(text.contains("categoria:null"));
+      assertFalse(text.contains("fonte:null"));
       assertFalse(text.contains("id:"));
    }
 

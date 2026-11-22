@@ -116,6 +116,8 @@ class ListarLancamentosToolIT {
       assertTrue(respostaAno.contains(", categoria:Curso"));
       assertTrue(respostaAno.contains(", categoria:Mercado"));
       assertTrue(respostaAno.contains(", fonte:Bolsa"));
+      assertFalse(respostaAno.contains("categoria:null"));
+      assertFalse(respostaAno.contains("fonte:null"));
    }
 
    @Test
