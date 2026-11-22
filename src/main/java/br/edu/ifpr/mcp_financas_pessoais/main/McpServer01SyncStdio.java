@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.AnalyzePdfPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.prompts.GreetingPrompt;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.CategoriasResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.RootInfoResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.SimpleReportTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.ListarLancamentosTool;
@@ -95,7 +96,10 @@ public class McpServer01SyncStdio {
                 throws Exception {
       // cria a lista de recursos disponíveis no servidor....
       List<McpResourceDefinition> resources = List.of(new AboutResource(),
-                                                      new RootInfoResource()
+                                                      new RootInfoResource(),
+                                                      new CategoriasResource(
+                                                            lancamentoRepositorio,
+                                                            orcamentoRepositorio)
                                                      );
       // ....para cada recurso, executa seu registro para posterior recuperação
       // de informações

@@ -254,6 +254,8 @@ Erros possíveis:
 
 **Informações da raiz de arquivos**: retorna o estado do diretório autorizado: caminho, se é ou não diretório, se está ou não acessível para leitura.
 
+**Categorias de gastos** (`financas://categorias`): lista em ordem alfabética as categorias usadas em gastos ou configuradas em orçamentos, sem duplicatas. Retorna `Nenhuma categoria encontrada.` quando ainda não houver categorias.
+
 ---
 
 ### 📌 Executar a aplicação 📌

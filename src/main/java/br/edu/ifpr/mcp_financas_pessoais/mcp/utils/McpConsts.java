@@ -97,4 +97,7 @@ public final class McpConsts {
    public static final String RESOURCE_ROOT_INFO_NAME = "root-info";
    public static final String RESOURCE_ROOT_INFO_URI  = "app://" +
                                                         RESOURCE_ROOT_INFO_NAME;
+   // FinanceiroResources
+   public static final String RESOURCE_CATEGORIAS_NAME = "categorias";
+   public static final String RESOURCE_CATEGORIAS_URI = "financas://categorias";
 }
