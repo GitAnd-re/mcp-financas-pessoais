@@ -62,6 +62,10 @@ public final class McpConsts {
    public static final String RFT_TOOL_NAME = "resumo_financeiro";
    public static final String RFT_ATTR_MES  = "mes";
    public static final String RFT_ATTR_ANO  = "ano";
+   // DefinirOrcamentoTool
+   public static final String DOT_TOOL_NAME = "definir_orcamento";
+   public static final String DOT_ATTR_CATEGORIA = "categoria";
+   public static final String DOT_ATTR_LIMITE_MENSAL = "limite_mensal";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

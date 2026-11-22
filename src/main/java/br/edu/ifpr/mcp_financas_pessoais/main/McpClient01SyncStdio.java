@@ -357,12 +357,22 @@ public class McpClient01SyncStdio {
             validateIntegerConstraints(integer, name, schema);
             yield integer;
          }
-         case "number" -> new BigDecimal(value);
+         case "number" -> parseNumber(value, name);
          case "boolean" -> parseBoolean(value);
          case "string" -> value;
          default -> parseComplexValue(value, type, schema);
       };
       return converted;
+   }
+
+   private BigDecimal parseNumber(String value, String name) {
+      try {
+         return new BigDecimal(value);
+      }
+      catch (NumberFormatException ex) {
+         throw new IllegalArgumentException("O parâmetro '" + name +
+               "' deve ser informado como número.");
+      }
    }
 
    static void validateIntegerConstraints(Integer value, String name,

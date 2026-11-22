@@ -143,6 +143,7 @@ Resumo financeiro de 04/2040:
 total_receitas:2500.00
 total_gastos:130.00
 saldo:2370.00
+
 gastos_por_categoria:
 Curso:30.00
 Mercado:100.00
@@ -158,6 +159,28 @@ Erros possíveis:
 * Ano ausente ou que não seja inteiro: `O campo ano deve ser informado como número inteiro.`
 * Ano menor que 1: `O ano deve ser maior que zero.`
 * Falha ao ler os lançamentos: `Não foi possível gerar o resumo financeiro: <mensagem da falha>.`
+
+**Definir orçamento**: salva ou atualiza o limite mensal de gastos de uma categoria no arquivo `orcamentos.json`, no diretório autorizado. Argumentos:
+* **categoria** (`string`, obrigatório): categoria a orçar; não pode ser vazia ou conter apenas espaços.
+* **limite_mensal** (`number`, obrigatório): limite positivo de gastos mensais.
+
+Resposta de sucesso (texto):
+
+```text
+categoria:Alimentação, limite_mensal:500.00
+```
+
+Erros possíveis:
+
+* Categoria ausente: `O campo categoria é obrigatório.`
+* Categoria que não seja texto: `O campo categoria deve ser texto.`
+* Categoria vazia ou só com espaços: `A categoria não pode ser vazia.`
+* Categoria composta apenas por número: `A categoria não pode ser um número.`
+* Limite mensal ausente: `O campo limite_mensal é obrigatório.`
+* Limite mensal que não seja número: `O limite mensal deve ser informado como número.`
+* Limite mensal inválido: `O limite mensal informado é inválido.`
+* Limite mensal menor ou igual a zero (rejeitado pela validação do schema MCP): `Validation failed: JSON schema validation errors: [/limite_mensal: deve ter um valor mínimo exclusivo de 0]`
+* Falha ao salvar: `Não foi possível salvar o orçamento: <mensagem da falha>.`
 
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:

@@ -1,0 +1,21 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "classpath:/json-schemas/definir-orcamento.schema.json",
+   "title": "Definir orçamento",
+   "description": "Define ou atualiza o limite mensal de gastos de uma categoria",
+   "type": "object",
+   "properties": {
+      "categoria": {
+         "type": "string",
+         "minLength": 1,
+         "description": "Categoria do orçamento"
+      },
+      "limite_mensal": {
+         "type": "number",
+         "exclusiveMinimum": 0,
+         "description": "Limite mensal positivo para a categoria"
+      }
+   },
+   "required": ["categoria", "limite_mensal"],
+   "additionalProperties": false
+}

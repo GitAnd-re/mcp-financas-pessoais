@@ -11,6 +11,7 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.AboutResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.resources.RootInfoResource;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.SimpleReportTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.ListarLancamentosTool;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.DefinirOrcamentoTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarGastoTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarReceitaTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.ResumoFinanceiroTool;
@@ -28,6 +29,8 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.utils.McpToolDefinition;
 import br.edu.ifpr.mcp_financas_pessoais.services.files.FileSearchService;
 import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.JsonLancamentoRepositorio;
 import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.LancamentoRepositorio;
+import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.JsonOrcamentoRepositorio;
+import br.edu.ifpr.mcp_financas_pessoais.services.financas.repository.OrcamentoRepositorio;
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServer.SingleSessionSyncSpecification;
@@ -54,6 +57,9 @@ public class McpServer01SyncStdio {
    private final LancamentoRepositorio lancamentoRepositorio =
                                  JsonLancamentoRepositorio.fromEnvironment();
 
+   private final OrcamentoRepositorio orcamentoRepositorio =
+                                 JsonOrcamentoRepositorio.fromEnvironment();
+
    private McpSyncServer server;
 
    private void registerTools(
@@ -65,6 +71,7 @@ public class McpServer01SyncStdio {
                                               new RegistrarReceitaTool(lancamentoRepositorio),
                                               new ListarLancamentosTool(lancamentoRepositorio),
                                               new ResumoFinanceiroTool(lancamentoRepositorio),
+                                              new DefinirOrcamentoTool(orcamentoRepositorio),
                                               new AuthPathTool(),
                                               new FileSearchTool(fss),
                                               new PdfSearchAndReplaceTool(),
