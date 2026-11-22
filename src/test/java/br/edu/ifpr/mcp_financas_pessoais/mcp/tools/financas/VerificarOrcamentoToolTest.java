@@ -40,7 +40,8 @@ class VerificarOrcamentoToolTest {
    @Test
    @DisplayName("Retornar gasto, limite, restante e estado de cada categoria")
    void verificaOrcamento() {
-      orcamentos.salvar(new Orcamento("Mercado", new BigDecimal("100.00")));
+      orcamentos.salvar(new Orcamento("Mercado", 11, 2026,
+            new BigDecimal("100.00")));
       lancamentos.salvar(new Lancamento("1", Lancamento.TipoLancamento.GASTO,
             new BigDecimal("125.50"), "Mercado", null,
             java.time.LocalDate.of(2026, 11, 10), ""));
@@ -84,6 +85,15 @@ class VerificarOrcamentoToolTest {
    @DisplayName("Retornar erro quando não houver orçamento")
    void retornaErroQuandoNaoHaOrcamento() {
       assertErro(argumentos(11, 2026), "Nenhum orçamento foi definido.");
+   }
+
+   @Test
+   @DisplayName("Retornar erro quando não houver orçamento para o período")
+   void retornaErroQuandoOrcamentoForDeOutroPeriodo() {
+      orcamentos.salvar(new Orcamento("Mercado", 10, 2026,
+            new BigDecimal("100.00")));
+      assertErro(argumentos(11, 2026),
+            "Nenhum orçamento foi definido para 11/2026.");
    }
 
    @Test

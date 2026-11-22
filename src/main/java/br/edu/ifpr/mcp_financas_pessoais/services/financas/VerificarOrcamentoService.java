@@ -29,9 +29,15 @@ public class VerificarOrcamentoService {
 
    public List<SituacaoOrcamento> verificar(int mes, int ano) throws IOException {
       validarPeriodo(mes, ano);
-      List<Orcamento> orcamentos = orcamentoRepositorio.listar();
-      if (orcamentos.isEmpty())
+      List<Orcamento> todosOrcamentos = orcamentoRepositorio.listar();
+      if (todosOrcamentos.isEmpty())
          throw new IllegalArgumentException("Nenhum orçamento foi definido.");
+      List<Orcamento> orcamentos = todosOrcamentos.stream()
+            .filter(orcamento -> orcamento.mes() == mes && orcamento.ano() == ano)
+            .toList();
+      if (orcamentos.isEmpty())
+         throw new IllegalArgumentException("Nenhum orçamento foi definido para " +
+               String.format("%02d/%04d", mes, ano) + ".");
 
       Map<String, BigDecimal> gastosPorCategoria = somarGastos(mes, ano);
       List<SituacaoOrcamento> situacoes = new ArrayList<>();

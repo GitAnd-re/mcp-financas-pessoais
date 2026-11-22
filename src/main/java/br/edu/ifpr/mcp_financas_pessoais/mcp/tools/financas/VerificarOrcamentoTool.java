@@ -40,7 +40,7 @@ public class VerificarOrcamentoTool implements McpToolDefinition {
       Map<String, Object> inputSchema = SchemaLoader.readFromFile(JSON_SCHEMA);
       Tool tool = Tool.builder(McpConsts.VOT_TOOL_NAME, inputSchema)
             .title("Verificar orçamento")
-            .description("Compara os gastos de cada categoria com o orçamento mensal definido.")
+            .description("Compara os gastos por categoria com os orçamentos definidos para o mês e ano informados.")
             .build();
       SyncToolSpecification specification = SyncToolSpecification.builder()
             .tool(tool)

@@ -68,6 +68,8 @@ class VerificarOrcamentoToolIT {
       CallToolResult definir = client.callTool(CallToolRequest.builder(
             McpConsts.DOT_TOOL_NAME)
             .arguments(Map.of(McpConsts.DOT_ATTR_CATEGORIA, "Mercado",
+                  McpConsts.DOT_ATTR_MES, 11,
+                  McpConsts.DOT_ATTR_ANO, 2026,
                   McpConsts.DOT_ATTR_LIMITE_MENSAL, new BigDecimal("100.00")))
             .build());
       assertFalse(definir.isError());
@@ -102,5 +104,28 @@ class VerificarOrcamentoToolIT {
       assertTrue(result.isError());
       assertTrue(((TextContent) result.content().get(0)).text()
             .contains("deve ter um valor máximo de 12"));
+   }
+
+   @Test
+   @DisplayName("Retornar erro quando só houver orçamento de outro período")
+   void retornaErroQuandoNaoHaOrcamentoNoPeriodo() {
+      CallToolResult definir = client.callTool(CallToolRequest.builder(
+            McpConsts.DOT_TOOL_NAME)
+            .arguments(Map.of(McpConsts.DOT_ATTR_CATEGORIA, "Viagem",
+                  McpConsts.DOT_ATTR_MES, 11,
+                  McpConsts.DOT_ATTR_ANO, 2026,
+                  McpConsts.DOT_ATTR_LIMITE_MENSAL, new BigDecimal("300.00")))
+            .build());
+      assertFalse(definir.isError());
+
+      CallToolResult result = client.callTool(CallToolRequest.builder(
+            McpConsts.VOT_TOOL_NAME)
+            .arguments(Map.of(McpConsts.VOT_ATTR_MES, 12,
+                  McpConsts.VOT_ATTR_ANO, 2026))
+            .build());
+
+      assertTrue(result.isError());
+      assertTrue(((TextContent) result.content().get(0)).text()
+            .contains("Nenhum orçamento foi definido para 12/2026."));
    }
 }

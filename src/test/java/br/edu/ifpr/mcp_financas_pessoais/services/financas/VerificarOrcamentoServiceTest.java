@@ -53,8 +53,12 @@ class VerificarOrcamentoServiceTest {
    @Test
    @DisplayName("Somar gastos do período e comparar com limites")
    void verificaGastosNoPeriodo() throws IOException {
-      orcamentos.salvar(new Orcamento("Mercado", new BigDecimal("100.00")));
-      orcamentos.salvar(new Orcamento("Lazer", new BigDecimal("50.00")));
+      orcamentos.salvar(new Orcamento("Mercado", 11, 2026,
+            new BigDecimal("100.00")));
+      orcamentos.salvar(new Orcamento("Lazer", 11, 2026,
+            new BigDecimal("50.00")));
+      orcamentos.salvar(new Orcamento("Mercado", 10, 2026,
+            new BigDecimal("999.00")));
       adicionarLancamento("1", Lancamento.TipoLancamento.GASTO, "Mercado",
             "40.00", LocalDate.of(2026, 11, 1));
       adicionarLancamento("2", Lancamento.TipoLancamento.GASTO, "Mercado",
@@ -109,6 +113,16 @@ class VerificarOrcamentoServiceTest {
    }
 
    @Test
+   @DisplayName("Informar quando não há orçamento para o período solicitado")
+   void rejeitaOrcamentoDeOutroPeriodo() {
+      orcamentos.salvar(new Orcamento("Mercado", 10, 2026, BigDecimal.TEN));
+      IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+            () -> service.verificar(11, 2026));
+      assertEquals("Nenhum orçamento foi definido para 11/2026.",
+            exception.getMessage());
+   }
+
+   @Test
    @DisplayName("Propagar falha ao ler lançamentos")
    void propagaFalhaAoLerLancamentos() {
       LancamentoRepositorio comFalha = new LancamentoRepositorio() {
@@ -120,7 +134,7 @@ class VerificarOrcamentoServiceTest {
             throw new IOException("falha ao ler lançamentos");
          }
       };
-      orcamentos.salvar(new Orcamento("Mercado", BigDecimal.TEN));
+      orcamentos.salvar(new Orcamento("Mercado", 11, 2026, BigDecimal.TEN));
       VerificarOrcamentoService serviceComFalha = new VerificarOrcamentoService(
             comFalha, orcamentos);
       IOException exception = assertThrows(IOException.class,
