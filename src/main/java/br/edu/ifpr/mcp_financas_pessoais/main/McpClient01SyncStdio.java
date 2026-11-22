@@ -431,7 +431,12 @@ public class McpClient01SyncStdio {
       System.out.println("=============== RESULTADO ===============");
       System.out.println("   Erro: " + (result.isError() ? "Sim" : "Não"));
       System.out.println("Content:" );
-         result.content().forEach(content -> System.out.println(" " + content));
+      result.content().forEach(content -> {
+         if (content instanceof TextContent textContent)
+            System.out.println(" " + textContent.text());
+         else
+            System.out.println(" " + content);
+      });
 
       if (result.structuredContent() != null) {
          System.out.println();

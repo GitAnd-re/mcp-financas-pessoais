@@ -58,6 +58,10 @@ public final class McpConsts {
    public static final String LLT_ATTR_MES         = "mes";
    public static final String LLT_ATTR_ANO         = "ano";
    public static final String LLT_ATTR_CATEGORIA   = "categoria";
+   // ResumoFinanceiroTool
+   public static final String RFT_TOOL_NAME = "resumo_financeiro";
+   public static final String RFT_ATTR_MES  = "mes";
+   public static final String RFT_ATTR_ANO  = "ano";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

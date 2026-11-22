@@ -132,6 +132,33 @@ Erros possíveis:
 * Categoria composta só por espaços: `A categoria não pode ser vazia.`
 * Falha ao ler os lançamentos: `Não foi possível listar os lançamentos: <mensagem da falha>.`
 
+**Resumo financeiro**: calcula o total de receitas, o total de gastos, o saldo (receitas menos gastos) e os gastos agrupados por categoria. Com mês, resume aquele mês; sem mês, resume o ano informado. Argumentos:
+* **mes** (`integer`, opcional): mês do resumo, de 1 a 12. Se omitido, considera o ano inteiro.
+* **ano** (`integer`, obrigatório): ano do resumo, maior que zero.
+
+Resposta de sucesso (texto):
+
+```text
+Resumo financeiro de 04/2040:
+total_receitas:2500.00
+total_gastos:130.00
+saldo:2370.00
+gastos_por_categoria:
+Curso:30.00
+Mercado:100.00
+```
+
+Quando não houver gastos no período, a resposta inclui `Nenhum gasto no período.` Os totais sem lançamentos são `0`.
+
+Erros possíveis:
+
+* Mês informado que não seja inteiro: `O campo mês deve ser informado como número inteiro.`
+* Mês menor que 1 (na coleta pelo cliente): `Valor inválido: O parâmetro 'mes' deve ser maior ou igual a 1.`
+* Mês maior que 12 (na coleta pelo cliente): `Valor inválido: O parâmetro 'mes' deve ser menor ou igual a 12.`
+* Ano ausente ou que não seja inteiro: `O campo ano deve ser informado como número inteiro.`
+* Ano menor que 1: `O ano deve ser maior que zero.`
+* Falha ao ler os lançamentos: `Não foi possível gerar o resumo financeiro: <mensagem da falha>.`
+
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
 * **arquivo**: caminho para o arquivos PDF (obrigatório).
