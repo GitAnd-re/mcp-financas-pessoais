@@ -15,6 +15,7 @@ import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.DefinirOrcamentoTool
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarGastoTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.RegistrarReceitaTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.ResumoFinanceiroTool;
+import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.financas.VerificarOrcamentoTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.AuthPathTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.files.FileSearchTool;
 import br.edu.ifpr.mcp_financas_pessoais.mcp.tools.moffice.word.MSWordParagraphCounterTool;
@@ -72,6 +73,8 @@ public class McpServer01SyncStdio {
                                               new ListarLancamentosTool(lancamentoRepositorio),
                                               new ResumoFinanceiroTool(lancamentoRepositorio),
                                               new DefinirOrcamentoTool(orcamentoRepositorio),
+                                              new VerificarOrcamentoTool(lancamentoRepositorio,
+                                                    orcamentoRepositorio),
                                               new AuthPathTool(),
                                               new FileSearchTool(fss),
                                               new PdfSearchAndReplaceTool(),

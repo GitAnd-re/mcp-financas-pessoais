@@ -352,17 +352,25 @@ public class McpClient01SyncStdio {
          validateDate(value, schema);
 
       Object converted = switch (type) {
-         case "integer" -> {
-            Integer integer = Integer.valueOf(value);
-            validateIntegerConstraints(integer, name, schema);
-            yield integer;
-         }
+         case "integer" -> parseInteger(value, name, schema);
          case "number" -> parseNumber(value, name);
          case "boolean" -> parseBoolean(value);
          case "string" -> value;
          default -> parseComplexValue(value, type, schema);
       };
       return converted;
+   }
+
+   private Integer parseInteger(String value, String name, Map<?, ?> schema) {
+      try {
+         Integer integer = Integer.valueOf(value);
+         validateIntegerConstraints(integer, name, schema);
+         return integer;
+      }
+      catch (NumberFormatException ex) {
+         throw new IllegalArgumentException("O parâmetro '" + name +
+               "' deve ser informado como número inteiro.");
+      }
    }
 
    private BigDecimal parseNumber(String value, String name) {

@@ -66,6 +66,10 @@ public final class McpConsts {
    public static final String DOT_TOOL_NAME = "definir_orcamento";
    public static final String DOT_ATTR_CATEGORIA = "categoria";
    public static final String DOT_ATTR_LIMITE_MENSAL = "limite_mensal";
+   // VerificarOrcamentoTool
+   public static final String VOT_TOOL_NAME = "verificar_orcamento";
+   public static final String VOT_ATTR_MES = "mes";
+   public static final String VOT_ATTR_ANO = "ano";
 
    // nome e atributo(s) dos prompts
    // AnalyzePdfPrompt

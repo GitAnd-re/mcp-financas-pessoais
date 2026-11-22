@@ -182,6 +182,28 @@ Erros possíveis:
 * Limite mensal menor ou igual a zero (rejeitado pela validação do schema MCP): `Validation failed: JSON schema validation errors: [/limite_mensal: deve ter um valor mínimo exclusivo de 0]`
 * Falha ao salvar: `Não foi possível salvar o orçamento: <mensagem da falha>.`
 
+**Verificar orçamento**: compara os gastos de cada categoria com os limites salvos para um mês. O restante é calculado como limite menos gasto; quando negativo, o orçamento foi ultrapassado. Argumentos:
+* **mes** (`integer`, obrigatório): mês da verificação, de 1 a 12.
+* **ano** (`integer`, obrigatório): ano da verificação, maior que zero.
+
+Resposta de sucesso (texto):
+
+```text
+Orçamentos de 11/2026:
+Lazer: gasto:0.00, limite:200.00, restante:200.00, estourou:false
+Mercado: gasto:125.50, limite:100.00, restante:-25.50, estourou:true
+```
+
+Erros possíveis:
+
+* Mês ou ano ausente: `O campo mês/ano é obrigatório.`
+* Mês que não seja inteiro: `O campo mês deve ser informado como número inteiro.`
+* Mês menor que 1 ou maior que 12 (na validação do schema MCP): mensagem de validação do schema indicando o limite permitido.
+* Ano que não seja inteiro: `O campo ano deve ser informado como número inteiro.`
+* Ano menor que 1: `O ano deve ser maior que zero.`
+* Nenhum orçamento definido: `Nenhum orçamento foi definido.`
+* Falha ao ler orçamentos ou lançamentos: `Não foi possível verificar os orçamentos: <mensagem da falha>.`
+
 ### 🪄 Prompts 🪄
 **Analisador de PDF**: fornece um prompt para a análise de um documento PDF tendo em vista o contexto informado. Argumentos:
 * **arquivo**: caminho para o arquivos PDF (obrigatório).

@@ -1,0 +1,22 @@
+{
+   "$schema": "https://json-schema.org/draft/2020-12/schema",
+   "$id": "classpath:/json-schemas/verificar-orcamento.schema.json",
+   "title": "Verificar orçamento",
+   "description": "Compara os gastos por categoria com os limites mensais",
+   "type": "object",
+   "properties": {
+      "mes": {
+         "type": "integer",
+         "minimum": 1,
+         "maximum": 12,
+         "description": "Mês a verificar, de 1 a 12"
+      },
+      "ano": {
+         "type": "integer",
+         "minimum": 1,
+         "description": "Ano a verificar"
+      }
+   },
+   "required": ["mes", "ano"],
+   "additionalProperties": false
+}
