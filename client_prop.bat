@@ -1,4 +1,6 @@
 
+@echo off
+chcp 65001 >nul
 cd target\dist-client
-java -Dmcp.files.root="C:\Arquivos Teste" -jar mcp_financas_pessoais_client.jar
+java -Dstdin.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dmcp.files.root="C:\Arquivos Teste" -jar mcp_financas_pessoais_client.jar
 cd ..\..

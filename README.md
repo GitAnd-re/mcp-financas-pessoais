@@ -316,7 +316,7 @@ O diretório onde o servidor grava `lancamentos.json` e `orcamentos.json` **deve
 
 ```
   "mcpServers": {
-    "NOME_DO_SERVIDOR": {
+    "mcp_financas_pessoais": {
       "command": "java",
       "args": [
         "-jar",
@@ -330,7 +330,7 @@ ou
 
 ```
   "mcpServers": {
-    "NOME_DO_SERVIDOR": {
+    "mcp_financas_pessoais": {
       "command": "java",
       "args": [
          "-Dmcp.files.root=DIRETÓRIO_AUTORIZADO",
@@ -341,33 +341,37 @@ ou
   }
 ```
 
-Ainda, é possível usar o MCP Java Server diretamente no Docker com a seguinte configuração
+Também é possível configurar o Claude Desktop para iniciar o MCP Java Server pelo Docker. O Docker Desktop deve estar em execução. Gere primeiro o servidor com o Maven para que o arquivo `server/mcp_financas_pessoais_server.jar` exista. Substitua os caminhos abaixo pelos caminhos absolutos do seu projeto e do arquivo `.env`:
 
 ```
-    "NOME_DO_SERVIDOR": {
+  "mcpServers": {
+    "mcp_financas_pessoais": {
       "command": "docker",
       "args": [
         "compose",
+        "--env-file",
+        "DRIVE:\\caminho\\absoluto\\do\\projeto\\.env",
         "-f",
-        "DRIVE:\\caminho\\absoluto\\do\\projeto\\mcp-server01\\compose.yaml",
+        "DRIVE:\\caminho\\absoluto\\do\\projeto\\compose.yaml",
         "run",
-        "--run",
+        "--build",
+        "--rm",
         "-T",
         "--no-deps",
-        "mcp-server-ai-host"
+        "mcp-server"
       ]
     }
+  }
 ```
 - Salvar o arquivo e iniciar ou reiniciar o Claude Desktop (se o Claude Desktop estiver em execução deve ser completamente encerrado e não apenas sua janela fechada).
 
+Na interface atual do Claude Desktop, as ferramentas ficam disponíveis no servidor conectado. Para localizar e usar os resources e prompts, clique no botão **+** ao lado da caixa de mensagem, selecione **Plugins** e depois **mcp-financas-pessoais**.
 
 O diretório `Users` também pode ser escrito como `Usuários`.
 
 `USUÁRIO_LOGADO` o nome do diretório é o mesmo nome usado para *login* no Windows.
  
 O diretório `Claude_pzs8sxrjxfjjc` pode possuir um nome diferente do apresentado, mas o prefixo `Claude_` será o mesmo.
-
-`NOME_DO_SERVIDOR` é o nome pelo qual o MCP Java Server será apresentado ao usuário, como, p.ex., `mcp_java_server`.
 
 `DRIVE:` é a indicação do *drive* no sistema de arquivos do Windows.
 
